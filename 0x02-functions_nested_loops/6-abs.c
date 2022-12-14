@@ -5,7 +5,7 @@
  * @int: the parameter to check for
  * Return: Always 0.
  */
-int _abs(int)
+int _abs(int n)
 {
 	n = -400;
 	_putchar((_abs(n)));
