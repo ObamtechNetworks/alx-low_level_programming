@@ -9,7 +9,7 @@ int _abs(int n)
 {
 	if (n <= 0)
 	{
-		_putchar((_abs(n)));
+		_putchar((_abs(n)) + '0');
 	}
 	return (0);
 }
