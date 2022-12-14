@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include "main.h"
 /**
- * main - check the code
- *
+ * _islower - checks character if it's a lowercase
+ * @c: the parameter to check for
  * Return: Always 0.
  */
-int main(void)
+int _islower(int c)
 {
 	int a;
 
