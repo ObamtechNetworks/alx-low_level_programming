@@ -11,11 +11,11 @@ int main(void)
 
 	a = _islower('c');
 	_putchar(a + '0');
-	a = islower('H');
+	a = _islower('H');
 	_putchar(a + '0');
-	a = islower(23);
+	a = _islower(23);
 	_putchar(a + '0');
-	a = islower('t');
+	a = _islower('t');
 	_putchar(a + '0');
 	_putchar('\n');
 	return (0);
