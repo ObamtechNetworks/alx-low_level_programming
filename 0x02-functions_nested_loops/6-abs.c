@@ -8,11 +8,7 @@
  */
 int main(void)
 {
-	int absoluteValue(int n)
-	{
-		return (_abs(n));
-		return (0);
-	}
-	_putchar(absoluteValue(-200 + '0'));
+	int n;
+	_putchar((_abs(n)));
 	return (0);
 }
