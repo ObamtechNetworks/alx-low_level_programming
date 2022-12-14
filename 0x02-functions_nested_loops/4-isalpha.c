@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "main.h"
+#include <ctype.h>
 /**
  * _isalpha - checks character if it's a lowercase
  * @a: the parameter to check for
