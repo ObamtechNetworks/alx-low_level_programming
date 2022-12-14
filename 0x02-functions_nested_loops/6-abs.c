@@ -8,7 +8,7 @@
  */
 int main(void)
 {
-	int n;
+	int n = -400;
 	_putchar((_abs(n)));
 	return (0);
 }
