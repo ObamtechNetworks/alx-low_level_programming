@@ -10,13 +10,11 @@ int _islower(int a)
 
 	a = _islower('o');
 	_putchar(a + '0');
-	a = _islower('108');
+	a = _islower(108);
 	_putchar(a + '0');
 	a = _islower('c');
 	_putchar(a + '0');
-	a = _islower('l');
-	_putchar(a + '0');
-	a = _islower('l');
+	a = _islower('I');
 	_putchar(a + '0');
 	a = _islower('s');
 	_putchar(a + '0');
