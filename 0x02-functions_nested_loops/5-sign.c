@@ -6,6 +6,7 @@
  */
 int print_sign(int n)
 {
+	int neg = -1;
 	for (n = 32; n <= 127; n++)
 	{
 		if (n > 0)
@@ -21,7 +22,7 @@ int print_sign(int n)
 		else if (n < 0)
 		{
 			_putchar(45);
-			return (-1);
+			return (neg);
 		}
 		_putchar('\n');
 	}
