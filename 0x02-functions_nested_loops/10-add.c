@@ -10,7 +10,7 @@ int add(int a, int b)
 {
 	int sum;
 
-	sum = a + b;
+	return (sum = a + b)i;
 	if ((sum / 10) > 0)
 	{
 		_putchar((sum / 10) + '0');
