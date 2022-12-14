@@ -2,12 +2,11 @@
 #include "main.h"
 /**
  * _islower - checks character if it's a lowercase
- * @c: the parameter to check for
+ * @a: the parameter to check for
  * Return: Always 0.
  */
-int _islower(int c)
+int _islower(int a)
 {
-	int a;
 
 	a = _islower('c');
 	_putchar(a + '0');
