@@ -6,7 +6,7 @@
  */
 int print_sign(int n)
 {
-	for (n = 42; n <= 47; n++)
+	for (n = 32; n <= 127; n++)
 	{
 		if (n > 0)
 		{
