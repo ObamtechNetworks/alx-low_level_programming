@@ -19,13 +19,13 @@ void times_table(void)
 			multiply = n * i;
 			if ((multiply / 10) > 0)
 			{
-				_putchar((multiply / 10) + '10');
+				_putchar((multiply / 10) + '0');
 			}
 			else
 			{
 				_putchar(' ');
 			}
-			_putchar((multiply % 10) + '10');
+			_putchar((multiply % 10) + '0');
 			if (n < 9)
 			{
 				_putchar(',');
