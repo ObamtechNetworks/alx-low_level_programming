@@ -1,11 +1,10 @@
-#include <stdio.h>
 #include "main.h"
 /**
- *main - check the code.
+ *  print_alphabet_x10 - Make alphabet x10
  *
- * Return: Always 0.
+ *  Return: void
  */
-int main(void)
+void print_alphabet_x10(void)
 {
 	char letter;
 	int i = 0;
@@ -15,9 +14,8 @@ int main(void)
 		for (letter = 'a'; letter <= 'z'; letter++)
 		{
 			_putchar(letter);
-			_putchar('\n');
 		}
+		_putchar('\n');
 		i++;
 	}
-	return (0);
 }
