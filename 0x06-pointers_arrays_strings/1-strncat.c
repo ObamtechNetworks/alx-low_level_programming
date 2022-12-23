@@ -6,19 +6,24 @@
  *
  * @dest: string destination
  * @src: string source
- * @n number of bytes to collect
+ * @n: number of bytes to collect
  * Return: 0 Always
  */
 char *_strncat(char *dest, char *src, int n)
 {
-	int len1, len2, i;
-
-	len1 = strlen(dest);
-	len2 = strlen(src);
-	for (i = 0; i <= n; i++)
+	if ((dest == NULL) && (src == NULL))
+		return NULL;
+	char *s1 = dest;
+	while (*s1 != '\0')
 	{
-		dest[len1 + i] = src[i];
+		s1++;
 	}
+	while (n--)
+	{
+		if (!(*s1++ == *src++))
+			return dest;
+	}
+	*s1 = '\0';
 	return (dest);
 }
 
