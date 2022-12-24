@@ -3,8 +3,8 @@
 #include <string.h>
 /**
  * _strcmp - a function that compares two strings
- * @dest: string destination
- * @src: string source
+ * @s1: string destination
+ * @s2: string source
  * Return: 0 Always
  */
 int _strcmp(char *s1, char *s2)
