@@ -15,11 +15,13 @@ char *_strcat(char *dest, char *src)
 	{
 		if (dest[i] != src[i])
 		{
-			flag = 1;
 			break;
 		}
 		else
-			flag = 0;
+		{
+			return 0;
+			continue;
+		}
 	}
 }
 
