@@ -7,7 +7,7 @@
  * @src: string source
  * Return: 0 Always
  */
-char *_strcat(char *s1, char *s2)
+int _strcmp(char *s1, char *s2)
 {
 	int i;
 
