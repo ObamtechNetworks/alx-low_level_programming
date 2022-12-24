@@ -7,13 +7,13 @@
  * @src: string source
  * Return: 0 Always
  */
-char *_strcat(char *dest, char *src)
+char *_strcat(char *s1, char *s2)
 {
-	int i, flag = 0;
+	int i;
 
-	for (i = 0; dest[i] != '\0' || src[i] != '\0'; i++)
+	for (i = 0; s1[i] != '\0' || s2[i] != '\0'; i++)
 	{
-		if (dest[i] != src[i])
+		if (s1[i] != s2[i])
 		{
 			break;
 		}
