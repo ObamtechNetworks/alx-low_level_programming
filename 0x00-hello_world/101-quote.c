@@ -10,7 +10,7 @@
  * write (int fd,const void *buf,size_t count)
  *
  * Author - Ipadeola Michael Bamidele
- * Return: Always 1 (failed)
+ * Return: Always 1 (failed, no success)
  */
 
 int main(void)
