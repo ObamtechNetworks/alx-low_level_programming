@@ -2,13 +2,14 @@
 #include <time.h>
 #include <stdio.h>
 
-/* 
+/**
  * main - Entry point
- * Description: A program that assigns random numbers to a variable
+ * @n - The integer variable that returns
+ * a random value at runtime
+ * Description: A program that assigns random
+ * numbers to a variable
  * and checks if it is positive or negative
- * @n: The integer variable that returns a random value at run time
- * Return: Always 0 (Success) 
- *
+ * Return: Always 0 (Success)
  */
 int main(void)
 {
