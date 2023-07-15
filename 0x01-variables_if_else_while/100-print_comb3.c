@@ -6,7 +6,7 @@
 * Description: A program that prints
 * all possible combination of two-digit numbers
 * followed by a new line (using putchar)
-* the two digits must be different 
+* the two digits must be different
 * numbers should be printed in ascending order wrt above
 * Author - Ipadeola Michael Bamidele
 * Return: Always 0 (Success)
