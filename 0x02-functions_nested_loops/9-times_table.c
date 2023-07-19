@@ -16,7 +16,7 @@ void times_table(void)
 	for (i = 0; i <= 9; i++)
 	{
 		_putchar(48);
-		for (j = 0; j <= 9; j++)
+		for (j = 1; j <= 9; j++)
 		{
 			/**
 			 * add comma and space
@@ -31,22 +31,20 @@ void times_table(void)
 			 * less than or equal to 9
 			 */
 			if (product <= 9)
-			{
-				putchar(' ');
-			}
+				_putchar(' ');
 			/**
 			 * if product is greater than 9
 			 * get the first digit
 			 */
 			else
-				putchar((product / 10) + 48);
+				_putchar((product / 10) + 48);
 
 			/**
 			 * then get the
 			 * last digit and prepend
 			 */
-			putchar((product % 10) + 48);
+			_putchar((product % 10) + 48);
 		}
-		putchar(10);
+		_putchar(10);
 	}
 }
