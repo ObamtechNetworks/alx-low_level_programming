@@ -1,10 +1,11 @@
 #include "main.h"
 
 /**
- * main - Entry point
+ * print_alphabet - function name
+ * @int - the alphabet variable
  * Description: A function that prints the alphabet in lowercase
  * followed by a new line
- * Author: Ipadeola Michael Bamidele
+ * Author - Ipadeola Michael Bamidele
  * Return: Always 0 (Success)
  */
 
