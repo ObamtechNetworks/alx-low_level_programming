@@ -3,7 +3,8 @@
 /**
  * print_numbers - prints numbers from 0 - 9
  * @void: receives nothing
- * Description: A function that multiplies two integers
+ * Description: A function that prints numbers
+ * from 0 - 9
  * Author: Ipadeola Michael Bamidele
  * Return: nothing
  */
