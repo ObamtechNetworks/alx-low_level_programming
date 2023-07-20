@@ -15,10 +15,10 @@ void print_times_table(int n)
 
 	if (n <= 15 && n >= 0)
 	{
-		for (i = 0; i <= n; i++)
+		for (i = 0; i <= n; ++i)
 		{
 			_putchar(48);
-			for (j = 1; j <= n; j++)
+			for (j = 1; j <= n; ++j)
 			{
 				_putchar(',');
 				_putchar(' ');
@@ -32,7 +32,7 @@ void print_times_table(int n)
 					_putchar((product / 100) + 48);
 					_putchar((product / 10) % 10 + 48);
 				}
-				else if (product < 99 && product >= 10)
+				else if (product <= 99 && product >= 10)
 					_putchar((product / 10) + 48);
 				_putchar((product % 10) + 48);
 			}
