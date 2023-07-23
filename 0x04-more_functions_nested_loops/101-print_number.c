@@ -23,6 +23,7 @@ void print_number(int n)
 	{
 		_putchar('-');
 		n = -n;
+		_putchar(n + 48);
 	}
 
 	divisor = 1;
