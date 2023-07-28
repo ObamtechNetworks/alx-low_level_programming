@@ -16,7 +16,8 @@ char *cap_string(char *str)
 
 	while (str[i] != '\0')
 	{
-		if (ispunct(str[i]) || isblank(str[i]) || str[i] == '\n' || str[i] == '{' || str[i] == '}' || str[i] == '(' || str[i] == ')')
+		if (ispunct(str[i]) || isblank(str[i]) || str[i] == '\n' ||
+				str[i] == '{' || str[i] == '}' || str[i] == '(' || str[i] == ')')
 		{
 			str[i + 1] = toupper(str[i + 1]);
 		}
