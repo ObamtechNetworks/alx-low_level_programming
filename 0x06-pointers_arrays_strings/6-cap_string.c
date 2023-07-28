@@ -12,20 +12,23 @@
 
 char *cap_string(char *str)
 {
-	int i = 0;
+	int i;
+	int length = strlen(str);
+	int setNextToUpper = 1;
 
-	while (str[i] != '\0')
+	for (i = 0; i < length; i++)
 	{
-		if (ispunct(str[i]) || isblank(str[i]) || str[i] == '\n' ||
-				str[i] == '{' || str[i] == '}' || str[i] == '(' || str[i] == ')')
+		if (setNextToUpper && isalpha(str[i]))
 		{
-			str[i + 1] = toupper(str[i + 1]);
+			str[i] = toupper(str[i]);
+			setNextToUpper = 0;
+		}
+		else if (strchr(" \t\n,;.!?\"(){}", str[i]))
+		{
+			setNextToUpper = 1;
 		}
 		else
-			str[i + 1] = tolower(str[i + 1]);
-		i++;
+			setNextToUpper = 0;
 	}
-	str[i] = tolower(str[i]);
-
 	return (str);
 }
