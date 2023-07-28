@@ -21,6 +21,8 @@ char *cap_string(char *str)
 		{
 			str[i + 1] = toupper(str[i + 1]);
 		}
+		else
+			str[i + 1] = tolower(str[i + 1]);
 		i++;
 	}
 	str[i] = tolower(str[i]);
