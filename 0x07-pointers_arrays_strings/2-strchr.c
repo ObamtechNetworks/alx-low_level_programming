@@ -29,6 +29,6 @@ char *_strchr(char *s, char c)
 		       * (if true) => performs another check on string
 		       */
 	}
-
-	return (NULL); /* returns NULL if nothing was found eventually */
+	else
+		return (NULL); /* returns NULL if nothing was found eventually*/
 }
