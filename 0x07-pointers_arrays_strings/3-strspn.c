@@ -8,16 +8,14 @@
  * I.e: the function calculates how many matches of
  * the substring it can find in the main string
  * (the inital segment that matches)
- * the function stops to run once it encounters a character
- * that differs from the main string THAT IS NOT IN THE ACCEPT STRING
+ * the function stops to run once it encounters a character that differs
+ * from the main string THAT IS NOT IN THE ACCEPT STRING
  * Return: The length of the matches found of the substring in the main string
  */
 
 unsigned int _strspn(char *s, char *accept)
 {
-	int i; /* counter to loop
-		* through the accept substring
-		*/
+	int i; /* counter to loop through the accept substring*/
 	unsigned int length = 0; /**
 				   * this variable increments
 				   * for every match found
@@ -36,43 +34,19 @@ unsigned int _strspn(char *s, char *accept)
 
 		for (i = 0; accept[i]; i++) /**
 					      * loop through the all substring to check
-					      * possible match with
-					      * current main string
+					      * possible match with current main string
 					      */
 		{
 			if (s[length] == accept[i])
 			{
-				isFound = 1; /**
-					       * this logic here
-					       * tells the outerloop
-					       * to continue to search
-					       * the next character of
-					       * the main string
-					       * as long as
-					       * a match exist
-					       * while checking all
-					       * of the substring
-					       * with the current
-					       * character of the
-					       * main string
+				isFound = 1; /* this logic here tells the
+					       * outerloop to continue
 					       */
-				break; /* exit this inner loop and
-					     * move to check next
-					     * character
-					     */
+				break; /* exit this inner loop & move to check next char */
 			}
 		}
 		if (!isFound)
-			break; /**
-				 * end the outer loop
-				 * when no match is found
-				 */
-		/**
-		 * The function stops searching for characters
-		 * in the main string once it encounters
-		 * a character that is not in the accept string.
-		 */
+			break; /* end the outer loop when no match is found */
 	}
 	return (length);
-
 }
