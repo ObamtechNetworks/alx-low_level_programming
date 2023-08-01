@@ -12,20 +12,19 @@
 
 char *_strchr(char *s, char c)
 {
-	int i;
-
-	for (i = 0; s[i] != '\0';)
+	while (*s != '\0')
 	{
-		if (s[i] == c) /* if character is found */
+		if (*s == c) /* if character is found */
 		{
-			return (&s[i]); /**
+			return (s); /**
 					  * returns a pointer to the
-					  * address of the character
+					  * address of the found
+					  * character
 					  * (hence FIRST occurence)
 					  * loop stops
 					  */
 		}
-		i++; /** updates counter,
+		s++; /** updates counter, move to next character
 		       * checks condition again
 		       * (if true) => performs another check on string
 		       */
