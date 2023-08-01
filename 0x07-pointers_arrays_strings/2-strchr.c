@@ -16,7 +16,7 @@ char *_strchr(char *s, char c)
 	{
 		while (*s != '\0')
 			s++;
-		return (s);
+		return (s); /* returns a pointer to the null character of s*/
 	}
 
 	while (*s != '\0')
