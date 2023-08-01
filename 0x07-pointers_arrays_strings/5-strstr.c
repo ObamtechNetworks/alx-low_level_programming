@@ -13,6 +13,8 @@
 
 char *_strstr(char *haystack, char *needle)
 {
+	char *ptr_hay, *ptr_needle;
+
 	if (!(*needle))
 	{
 		return haystack;
@@ -20,14 +22,14 @@ char *_strstr(char *haystack, char *needle)
 
 	while (*haystack)
 	{
-		*ptr_hay = haystack;
-		*ptr_needle = needle;
-	}
-	while (*ptr_needle && *ptr_hay == *ptr_needle)
-	{
-		ptr_hay++;
-		ptr_needle++;
+		ptr_hay = haystack;
+		ptr_needle = needle;
 		
+		while (*ptr_needle && *ptr_hay == *ptr_needle)
+		{
+			ptr_hay++;
+			ptr_needle++;
+		}
 		if (!(*ptr_needle))
 			return (haystack);
 		haystack++;
