@@ -56,7 +56,7 @@ unsigned int _strspn(char *s, char *accept)
 					       * character of the
 					       * main string
 					       */
-				continue; /* exit this inner loop and
+				break; /* exit this inner loop and
 					     * move to check next
 					     * character
 					     */
