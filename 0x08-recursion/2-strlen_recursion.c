@@ -6,7 +6,7 @@
  * @s: The string to calculate its length
  * Description: A function that returns the length of a string
  * Using the recursion technique
- * Return: void
+ * Return: the length of the string
  */
 int _strlen_recursion(char *s)
 {
