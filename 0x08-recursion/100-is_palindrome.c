@@ -34,10 +34,10 @@ int check_palindrome(char *s, int start, int end)
 
 	/* skip non-alphanumeric characters and move the pointers */
 	if (!is_alphanum(s[start]) && !isspace(s[start]))
-		return check_palindrome(s, start + 1, end);
+		return (check_palindrome(s, start + 1, end));
 
 	if (!is_alphanum(s[end]) && !isspace(s[end]))
-		return check_palindrome(s, start, end - 1);
+		return (check_palindrome(s, start, end - 1));
 
 	/* compare the characters while ignoring cases (upper or lower) */
 	if (!ignore_case(s[start], s[end]))
