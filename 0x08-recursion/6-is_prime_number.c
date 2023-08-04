@@ -10,17 +10,19 @@
  */
 int is_prime_number(int n)
 {
-	return is_prime(n, 2);/* start to test a number if
-				 * it is a prime or not
-				  * recursively
-				  */
+	return (is_prime(n, 2));/* start to test a number if
+			       *it is a prime or not
+			       * recursively
+			       */
 }
 
 /**
  * is_prime - the function that actually checks if a number is a prime number
  * @n: the parameter the test if it's a prime number
- * @guess: the number to check if the result of it's square root returns a remainder 0 or not
- * Description: This approach actually makes use of what we call the Trial division method
+ * @guess: the number to check if the result of
+ * it's square root returns a remainder 0 or not
+ * Description: This approach actually makes use of what we called
+ * the Trial division method
  * The Trial Division method tests for primality by first finding the integer
  * squareroot value of the guess number and then from that number
  * downwards, it checks the remainder value when n % guess is done
@@ -31,17 +33,17 @@ int is_prime_number(int n)
 
 int is_prime(int n, int guess)
 {
-	guess = sqrt(n);
-
-	if (guess <= 0)
+	if (guess <= 1) /* 0 or 1 are not prime numbers */
 		return (0);
 
 	if (n % guess == 0)
-		return (0); /** not a prime number */
+		return (0); /** not a prime number,
+			     * if n is divisible by guess
+			     */
 
-	if (n % guess != 0)
+	if (guess * guess > n)
 		return (1); /** n is a prime number*/
 
-	return (is_prime(n, guess - 1)); /** test another number */
+	return (is_prime(n, guess + 1)); /** test another number */
 }
 
