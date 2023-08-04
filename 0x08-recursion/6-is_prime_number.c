@@ -38,7 +38,7 @@ int is_prime(int n, int guess)
 {
 	if (guess <= 1) /* 0 or 1 are not prime numbers */
 		return (0);
-	
+
 	if (guess * guess > n)
 		return (1); /** n is a prime number*/
 
