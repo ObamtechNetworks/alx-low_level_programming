@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include "main.h"
+#include <string.h>
+#include <ctype.h>
+
+/**
+ * is_palindrome - checks if a string is a palindrome
+ * @s: The string to check for
+ * Description: A function that checks if a string is a palindrome
+ * Return: 1 if a palindrome, 0 if not
+ */
+int is_palindrome(char *s)
+{
+	/* create a pointer to the end of the string */
+	char *end = s + strlen(s) - 1;
+
+	/* convert all characters to lower case */
+	to_lower(s);
+	/*remove all spaces and punct*/
+	remove_space_punct(s);
+
+	return (check_palindrome(s, end));
+}
+
+/**
+ * check_palindrome - an aide to the is_palindrome function
+ * @s: checks the string if a palindrome by performing some works on it
+ * Description - reformats the string by removing all pucnts and space
+ * convert all string to lowercase and then
+ * do the check on each character
+ * Return: 1 if a palindrome, 0 if not
+ */
+int check_palindrome(char *start, char *end)
+{
+	/* start to compare the start and end */
+	if (start >= end)
+		return (1); /*a palindrome is found */
+
+	if (*start == *end)
+		return (check_palindrome(start + 1, end - 1)); /* check another character */
+
+	return (0); /* if all above is false, return 0 not a palindrome */
+}
+
+/** remove_space_punct - cleans a string by removing all space and punct
+ * @s: string to clean
+ *
+ * Return: void
+ */
+void remove_space_punct(char *s)
+{
+	char *src = s, *dest = s;
+	unsigned char curr;
+
+	while (*src)
+	{
+		curr = *src;
+		if (!isspace(curr) && !ispunct(curr))
+		{
+			*dest = curr;
+			dest++;
+		}
+		src++;
+	}
+	*dest = '\0';
+}
+
+void to_lower(char *s)
+{
+	while (*s)
+	{
+		*s = tolower(*s);
+		s++;
+	}
+}
