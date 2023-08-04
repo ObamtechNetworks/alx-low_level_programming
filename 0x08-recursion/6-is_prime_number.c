@@ -10,6 +10,9 @@
  */
 int is_prime_number(int n)
 {
+	if (n <= 1)
+		return (0);
+
 	return (is_prime(n, 2));/* start to test a number if
 			       *it is a prime or not
 			       * recursively
@@ -35,6 +38,9 @@ int is_prime(int n, int guess)
 {
 	if (guess <= 1) /* 0 or 1 are not prime numbers */
 		return (0);
+	
+	if (guess * guess > n)
+		return (1); /** n is a prime number*/
 
 	if (n % guess == 0)
 		return (0); /** not a prime number,
