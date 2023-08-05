@@ -12,15 +12,12 @@
 int main(int argc, char **argv)
 {
 	int product;
-	int count;
 
-	if (argc >= 3)
+	if (argc == 3)
 	{
-		for (count = 1; count < argc - 1; count++)
-			product = atoi(argv[count]) * atoi(argv[count + 1]);
+		product = atoi(argv[1]) * atoi(argv[2]);
 		printf("%d\n", product);
 	}
-
 	else
 		printf("Error\n");
 	return (1);
