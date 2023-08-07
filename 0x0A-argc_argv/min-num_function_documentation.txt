@@ -1,0 +1,75 @@
+#include <stdio.h>
+#include "main.h"
+
+/**
+ * min_num_coins - returns the minimum number of coins to make a change
+ * @amount: the amount to calculate the minimum number of coins
+ * required to sum it up
+ * @given_coins: an array of given coins to calculate its required minimum
+ * @given_coins_length: the length of total coins array
+ *
+ * Return: the minumum number of coin
+ */
+int min_num_coins(int amount, int given_coins[], int given_coins_length)
+{
+        int i, j;/*initialize counter variables for amount and given coins*/
+
+        int *dp = (int *)malloc((amount + 1) * sizeof(int)); 
+	/**
+	 * create an array to determine the total number of coins required
+	 * to make a change since we are starting from zero so we are
+	 * to iterate through the given amount 
+	 * and check all cases from 0 to target amount
+	 */
+
+        /**
+         * cater for not enough memory should in case when
+         * dynamically allocating memory
+         */
+        if (dp == NULL)
+        {
+                printf("Memory allocation failed\n");
+                exit (1);
+        }
+        dp[0] = 0; /* set all values of 0 amount to 0*/
+	
+	/**
+         * loop through the amount (dynamic programming), to target values
+         * from 0 to the given amount (bottom up approach)
+         * but we need to dynamically allocate this using malloc
+         */
+        for (i = 1; i <= amount; i++)
+        {
+	/**
+	 * assume a larger (infinity) value for amount 1
+	 * as the minimum number of coins for a given amount
+	 * */
+		dp[i] = 999999; /*an infinity, very large value*/
+                /**
+                 * loop through the given coins against each amount
+                 * and get the minimum value
+                 */
+                for (j = 0; j < given_coins_length; j++)
+                {
+	/**
+	 * check if the value of the current amount (i)
+	 * is greater than the current given coin if true, then calculate
+	 * the minimum number of coin against that amount
+	 * using the dynamic programming technique
+	 */
+                        if (i >= given_coins[j])
+                        {
+                                /**
+                                 * value of minimum number of coins would be returned
+                                 */
+                                dp[i] = min(dp[i], dp[i - given_coins[j]] + 1);
+                        }
+                }
+        }
+        /**
+         * then return the total minimum number (of coins) (from given coins)
+         * required to sum up the given amount
+         */
+        free(dp); /*free the memory after finish using */
+        return (dp[amount]);
+}
