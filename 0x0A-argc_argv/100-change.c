@@ -1,7 +1,50 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "main.h"
+/**
+ * min - returns the minimum value
+ * @a: the first integer param to check
+ * @b: the second integer param to check
+ *
+ * Return: the minimum value
+ */
+int min(int a, int b)
+{
+	return (a < b ? a : b);
+}
+/**
+ * min_num_coins - returns the minimum number of coins to make a change
+ * @amount: the amount to calculate the minimum number of coins
+ * required to sum it up
+ * @given_coins: an array of given coins to calculate its required minimum
+ * @given_coins_length: the length of total coins array
+ *
+ * Return: the minumum number of coin
+ */
+int min_num_coins(int amount, int given_coins[], int given_coins_length)
+{
+	int i, j;/*initialize counter variables for amount and given coins*/
+	int *dp = (int *)malloc((amount + 1) * sizeof(int));/*dyn.create space */
 
+	if (dp == NULL)
+	{
+		printf("Memory allocation failed\n");
+		exit(1);
+	}
+	dp[0] = 0; /* set all values of 0 amount to 0*/
+	for (i = 1; i <= amount; i++)
+	{
+		dp[i] = 99999999; /*initalize first value as max or infinty*/
+		for (j = 0; j < given_coins_length; j++)
+		{
+			if (i >= given_coins[j])
+			{
+				dp[i] = min(dp[i], dp[i - given_coins[j]] + 1);
+			}
+		}
+	}
+	free(dp);
+	return (dp[amount]);
+}
 /**
  * main - prints the minimum number of coins to make change for a given amount
  * @argc: returns the number of arguments passed to the command line
