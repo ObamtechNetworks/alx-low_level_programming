@@ -12,8 +12,8 @@
  */
 char *_strdup(char *str)
 {
-	unsigned int size = sizeof(str) / sizeof(str[0]);
-	char *dup = malloc(length * sizeof(char));
+	unsigned int size = sizeof(*str) / sizeof(*str);
+	char *dup = malloc(size * sizeof(char));
 	/*handle malloc return if charAr is NULL */
 	if (dup == NULL)
 	{
