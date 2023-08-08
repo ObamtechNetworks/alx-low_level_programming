@@ -20,7 +20,7 @@ int **alloc_grid(int width, int height)
 		return (NULL);
 
 	/*dyanmically create a pointer to a 2D array */
-	grid_array = (int **)malloc(width * sizeof(int *));
+	grid_array = (int **)malloc((width + height) * sizeof(int *));
 	/*care for malloc return */
 	if (grid_array == NULL)
 		return (NULL);
