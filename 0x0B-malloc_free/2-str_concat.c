@@ -12,7 +12,6 @@
  */
 char *str_concat(char *s1, char *s2)
 {
-	/*int size;*/
 	int len1 = 0, len2 = 0;
 	int i, j;
 	char *join;
@@ -22,7 +21,6 @@ char *str_concat(char *s1, char *s2)
 	if (s2 != NULL)
 		len2 = strlen(s2);
 
-	/*size = len1 + len2 + 1; */
 	/* enough size to contain s1 and s2 */
 	join = (char *)malloc((len1 + len2 + 1) * sizeof(char));
 
@@ -32,7 +30,7 @@ char *str_concat(char *s1, char *s2)
 		return (NULL);
 	}
 
-	/*fill values of s1 and s2 into ptr_join accordingly*/
+	/*fill values of s1 and s2 into join accordingly*/
 	for (i = 0; i < len1; i++)
 		join[i] = s1[i];
 
