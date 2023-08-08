@@ -17,11 +17,11 @@ char *_strdup(char *str)
 	/*handle malloc return if charAr is NULL */
 	if (dup == NULL)
 	{
-		return ("failed to allocate memory\n");
+		return (NULL);
 		exit(1);
 	}
 	if (str == NULL)
-		return (NULL);
+		return ("failed to allocate memory\n");
 	/*copy contents of str into new space */
 	strcpy(dup, str);
 	return (dup);
