@@ -20,11 +20,10 @@ char *_strdup(char *str)
 		return (NULL);
 		exit(1);
 	}
-	if (str == NULL)
+	if (*str == NULL)
 	{
 		printf("failed to allocate memory\n");
 		return (NULL);
-		
 	}
 	/*copy contents of str into new space */
 	strcpy(dup, str);
