@@ -13,15 +13,16 @@
 char *str_concat(char *s1, char *s2)
 {
 	int size = (strlen(s1) + strlen(s2)) + 1;
-	char *ptr_join;
-	/* enough size to contain s1 and s2 */
-	char *joined = malloc(size * sizeof(char));
-
+	char *ptr_join, *joined;
+	
 	if (s1 == NULL)
 		/* if any of them is NULL reassign them as empty strings*/
 		s1 = "";
 	if (s2 == NULL)
 		s2 = "";
+	/* enough size to contain s1 and s2 */
+	joined = malloc(size * sizeof(char));
+
 	/* handle malloc return */
 	if (joined == NULL)
 	{
