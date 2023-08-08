@@ -21,7 +21,11 @@ char *_strdup(char *str)
 		exit(1);
 	}
 	if (str == NULL)
-		return ("failed to allocate memory\n");
+	{
+		printf("failed to allocate memory\n");
+		return (NULL);
+		
+	}
 	/*copy contents of str into new space */
 	strcpy(dup, str);
 	return (dup);
