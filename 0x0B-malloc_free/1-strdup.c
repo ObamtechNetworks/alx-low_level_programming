@@ -12,18 +12,20 @@
  */
 char *_strdup(char *str)
 {
+	/*care for when str == NULL */
+	if (str == NULL)
+	{
+		return (NULL);
+	}
+	/* get size of str */
 	unsigned int size = strlen(str) + 1;
+	/*allocate memory to duplicate str */
 	char *dup = malloc(size * sizeof(char));
 	/*handle malloc return if charAr is NULL */
 	if (dup == NULL)
 	{
 		return (NULL);
 		exit(1);
-	}
-	if (*str == NULL)
-	{
-		printf("failed to allocate memory\n");
-		return (NULL);
 	}
 	/*copy contents of str into new space */
 	strcpy(dup, str);
