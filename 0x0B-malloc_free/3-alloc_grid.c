@@ -31,7 +31,7 @@ int **alloc_grid(int width, int height)
 	 */
 	for (row = 0; row < width; row++)
 	{
-		grid_array[row] = (int *)malloc(row * sizeof(int));
+		grid_array[row] = (int *)malloc((width + height) * sizeof(int));
 		/*check if memory allocation was successful*/
 		if (grid_array[row] == NULL)
 		{
