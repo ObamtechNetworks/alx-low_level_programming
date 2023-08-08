@@ -12,12 +12,12 @@
  */
 char *_strdup(char *str)
 {
-	unsigned int length = strlen(str);
+	unsigned int size = sizeof(str) / sizeof(str[0]);
 	char *dup = malloc(length * sizeof(char));
 	/*handle malloc return if charAr is NULL */
 	if (dup == NULL)
 	{
-		return (NULL);
+		return ("failed to allocate memory\n");
 		exit(1);
 	}
 	if (str == NULL)
