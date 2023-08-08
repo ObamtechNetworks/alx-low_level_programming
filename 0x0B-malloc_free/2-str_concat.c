@@ -12,43 +12,34 @@
  */
 char *str_concat(char *s1, char *s2)
 {
-	int size = (strlen(s1) + strlen(s2)) + 1;
-	char *ptr_join, *joined;
+	/*int size;*/
+	int len1 = 0, len2 = 0;
+	int i, j;
+	char *join;
 
-	if (*s1 == '\0')
-		s1 = "";
-	if (*s2 == '\0')
-		s2 = "";
+	if (s1 != NULL)
+		len1 = strlen(s1);
+	if (s2 != NULL)
+		len2 = strlen(s2);
+
+	/*size = len1 + len2 + 1; */
 	/* enough size to contain s1 and s2 */
-	joined = malloc(size * sizeof(char));
+	join = (char *)malloc((len1 + len2 + 1) * sizeof(char));
 
 	/* handle malloc return */
-	if (joined == NULL)
+	if (join == NULL)
 	{
 		return (NULL);
-		exit(1);
 	}
-	/**
-	 * create a pointer to joined, so as to keep track of concatenation
-	 * and also manipulate values directly
-	 */
-	ptr_join = joined;
+
 	/*fill values of s1 and s2 into ptr_join accordingly*/
-	while (*s1 != '\0')
-	{
-		/*character at s1 is stored in ptr_join*/
-		*ptr_join = *s1;
-		ptr_join++;
-		s1++;
-	}
-	while (*s2 != '\0')
-	{
-		/*start filling in from the current position of ptr and s2*/
-		*ptr_join = *s2;
-		ptr_join++;
-		s2++;
-	}
+	for (i = 0; i < len1; i++)
+		join[i] = s1[i];
+
+	for (j = 0; j < len2; j++)
+		join[len1 + j] = s2[j];
+
 	/*return null pointer to end of joined string */
-	*ptr_join = '\0';
-	return (joined);
+	join[len1 + len2] = '\0';
+	return (join);
 }
