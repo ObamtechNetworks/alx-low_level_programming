@@ -28,6 +28,7 @@ int **alloc_grid(int width, int height)
 			free(grid_array[j]);
 		free(grid_array);
 		return (NULL);
+		exit(1);
 	}
 	/**
 	 * create a loop that dynamically creates
@@ -50,6 +51,5 @@ int **alloc_grid(int width, int height)
 		for (col = 0; col < width; col++)
 			grid_array[row][col] = 0;
 	}
-
 	return (grid_array);
 }
