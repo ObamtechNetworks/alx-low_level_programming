@@ -23,10 +23,7 @@ int **alloc_grid(int width, int height)
 	grid_array = (int **)malloc(height * sizeof(int *));
 	/*care for malloc return */
 	if (grid_array == NULL)
-	{
-		/*free(grid_array);*/
 		return (NULL);
-	}
 	/**
 	 * create a loop that dynamically creates
 	 * space for each row element and col element of the 2D array
@@ -38,7 +35,7 @@ int **alloc_grid(int width, int height)
 		if (grid_array[row] == NULL)
 		{
 			/*free all individual space and return NULL*/
-			for (i = 0; i < row; i++)
+			for (i = 0; i < height; i++)
 				free(grid_array[i]);
 			/* free the main grid_array */
 			free(grid_array);
