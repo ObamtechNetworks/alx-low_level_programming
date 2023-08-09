@@ -12,7 +12,7 @@
 int **alloc_grid(int width, int height)
 {
 	/*create local variables*/
-	int row, col, i;
+	int row, i;
 	int **grid_array;
 
 	/*check if width or height is NULL */
@@ -20,7 +20,7 @@ int **alloc_grid(int width, int height)
 		return (NULL);
 
 	/*dyanmically create a pointer to a 2D array */
-	grid_array = (int **)malloc(width * sizeof(int *));
+	grid_array = (int **)malloc(height * sizeof(int *));
 	/*care for malloc return */
 	if (grid_array == NULL)
 		return (NULL);
@@ -29,9 +29,10 @@ int **alloc_grid(int width, int height)
 	 * create a loop that dynamically creates
 	 * space for each row element and col element of the 2D array
 	 */
-	for (row = 0; row < width; row++)
+	for (row = 0; row < height; row++)
 	{
-		grid_array[row] = (int *)malloc(width * sizeof(int));
+		grid_array[row] = (int *)calloc(width, sizeof(int)); 
+		/*remember, calloc fills each elements autmatically with zeros*/
 		/*check if memory allocation was successful*/
 		if (grid_array[row] == NULL)
 		{
@@ -42,9 +43,6 @@ int **alloc_grid(int width, int height)
 			free(grid_array);
 			return (NULL);
 		}
-		/*fill each cols with value if none is NULL*/
-		for (col = 0; col < height; col++)
-			grid_array[row][col] = 0;
 	}
 	return (grid_array);
 }
