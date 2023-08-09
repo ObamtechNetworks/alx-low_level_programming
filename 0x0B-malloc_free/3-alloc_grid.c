@@ -16,7 +16,7 @@ int **alloc_grid(int width, int height)
 	int row, i, j, col;
 	int **grid_array;
 
-	/*check if width or height is NULL */
+	/*rr[i][j]);check if width or height is NULL */
 	if (width <= 0 || height <= 0)
 		return (NULL);
 	/*dyanmically create a pointer to a 2D array */
@@ -24,11 +24,11 @@ int **alloc_grid(int width, int height)
 	/*care for malloc return */
 	if (grid_array == NULL)
 	{
+		free(grid_array);
 		for (j = 0; j < height; j++)
 			free(grid_array[j]);
 		free(grid_array);
-		printf("failed to allocate memory\n");
-		exit(1);
+		return (NULL);
 	}
 	/**
 	 * create a loop that dynamically creates
