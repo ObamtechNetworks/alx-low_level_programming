@@ -13,7 +13,7 @@
 int **alloc_grid(int width, int height)
 {
 	/*create local variables*/
-	int row, i, j, col;
+	int row, i, col;
 	int **grid_array;
 
 	/*rr[i][j]);check if width or height is NULL */
@@ -24,8 +24,6 @@ int **alloc_grid(int width, int height)
 	/*care for malloc return */
 	if (grid_array == NULL)
 	{
-		for (j = 0; j < height; j++)
-			free(grid_array[j]);
 		free(grid_array);
 		return (NULL);
 	}
