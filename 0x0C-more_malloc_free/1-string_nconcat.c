@@ -25,10 +25,7 @@ unsigned int get_length(char *str)
  */
 char *string_nconcat(char *s1, char *s2, unsigned int n)
 {
-	/**
-	 * create the local variables and address (pointer)
-	 * of new space in memory to store new string
-	 */
+	/*create the local variables and address (pointer) for memory*/
 	unsigned int i, len_s1, len_s2, j;
 	char *str;
 
@@ -40,8 +37,7 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	/* if n is greater or equal to length of s2, use entire string s2*/
 	if (n >= get_length(s2))
 		n = get_length(s2);
-	if (n <= 0)
-		n = '\0';
+
 	/*get length of each string*/
 	len_s1 = get_length(s1);
 	len_s2 = get_length(s2);
@@ -53,7 +49,6 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 		return (NULL);
 		exit(1);
 	}
-
 	/* fill values of s1 to new string*/
 	for (i = 0; i < len_s1; i++)
 		str[i] = s1[i];
