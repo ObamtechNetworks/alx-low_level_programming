@@ -50,7 +50,7 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	for (i = 0; i < len_s1; i++)
 		str[i] = s1[i];
 	/*concatenate values of s2 to new space with reference to n*/
-	for (j = 0; j < n && j < len_s2; j++)
+	for (j = 0; j < n && s2[j] != '\0'; j++)
 		str[len_s1 + j] = s2[j];
 	/* add null byte */
 	str[len_s1 + len_s2] = '\0';
