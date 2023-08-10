@@ -41,6 +41,8 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	/* if n is greater or equal to length of s2, use entire string s2*/
 	if (n >= get_length(s2))
 		n = get_length(s2);
+	if (n <= 0)
+		n = '\0';
 
 	/*get length of each string*/
 	len_s1 = get_length(s1);
