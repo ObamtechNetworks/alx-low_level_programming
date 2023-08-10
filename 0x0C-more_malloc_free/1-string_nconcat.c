@@ -42,18 +42,15 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	len_s1 = get_length(s1);
 	len_s2 = get_length(s2);
 	/*allocate memory for dest string with space for null byte*/
-	str = malloc(sizeof(s1) * (len_s1 + len_s2 + 1));
+	str = malloc(sizeof(char) * (len_s1 + len_s2 + 1));
 	/** malloc failure */
 	if (str == NULL)
-	{
 		return (NULL);
-		exit(1);
-	}
 	/* fill values of s1 to new string*/
 	for (i = 0; i < len_s1; i++)
 		str[i] = s1[i];
 	/*concatenate values of s2 to new space with reference to n*/
-	for (j = 0; j < n && len_s2; j++)
+	for (j = 0; j < n && j < len_s2; j++)
 		str[len_s1 + j] = s2[j];
 	/* add null byte */
 	str[len_s1 + len_s2] = '\0';
