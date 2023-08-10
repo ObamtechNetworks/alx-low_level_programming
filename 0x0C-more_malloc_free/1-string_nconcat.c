@@ -41,7 +41,7 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	/*get length of s1*/
 	len_s1 = get_length(s1);
 	/*allocate memory for dest string with space for null byte*/
-	str = malloc(sizeof(char) * (len_s1 + n + 2));
+	str = malloc(sizeof(char) * (len_s1 + n + 1));
 	/** malloc failure */
 	if (str == NULL)
 		return (NULL);
