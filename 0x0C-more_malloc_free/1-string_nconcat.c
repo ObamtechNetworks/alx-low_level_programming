@@ -53,7 +53,7 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	for (j = 0; j < n; j++)
 		str[len_s1 + j] = s2[j];
 	/* add null byte */
-	str[len_s1 + len_s2] = '\0';
+	str[len_s1 + n] = '\0';
 	/* => len_s1 + len_s2 is to add the null byte at the end of str */
 
 	/* return pointer (new allocated space in memory)*/
