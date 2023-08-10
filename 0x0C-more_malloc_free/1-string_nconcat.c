@@ -37,7 +37,6 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 		s1 = "";
 	if (s2 == NULL)
 		s2 = "";
-
 	/* if n is greater or equal to length of s2, use entire string s2*/
 	if (n >= get_length(s2))
 		n = get_length(s2);
@@ -47,7 +46,6 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	/*get length of each string*/
 	len_s1 = get_length(s1);
 	len_s2 = get_length(s2);
-
 	/*allocate memory for dest string with space for null byte*/
 	str = malloc(sizeof(s1) * (len_s1 + len_s2 + 1));
 	/** malloc failure */
