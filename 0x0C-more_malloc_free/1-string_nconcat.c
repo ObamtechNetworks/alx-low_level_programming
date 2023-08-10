@@ -42,7 +42,6 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 		n = get_length(s2);
 	if (n <= 0)
 		n = '\0';
-
 	/*get length of each string*/
 	len_s1 = get_length(s1);
 	len_s2 = get_length(s2);
@@ -50,7 +49,10 @@ char *string_nconcat(char *s1, char *s2, unsigned int n)
 	str = malloc(sizeof(s1) * (len_s1 + len_s2 + 1));
 	/** malloc failure */
 	if (str == NULL)
+	{
 		return (NULL);
+		exit(1);
+	}
 
 	/* fill values of s1 to new string*/
 	for (i = 0; i < len_s1; i++)
