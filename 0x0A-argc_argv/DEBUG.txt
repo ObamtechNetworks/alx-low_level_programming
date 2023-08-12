@@ -25,7 +25,7 @@ int min_num_coins(int amount, int given_coins[], int given_coins_length)
 {
 	int i, j;
 	/*initialize counter variables for amount and given coins*/
-	int *dp = (int *)malloc((amount + 1) * sizeof(int));
+	int *dp = malloc((amount + 1) * sizeof(int));
 	int total_min_coins;
 
 	if (dp == NULL)
