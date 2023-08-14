@@ -12,12 +12,6 @@
  */
 void init_dog(struct dog *d, char *name, float age, char *owner)
 {
-	struct dog *new_dog;
-	new_dog = d;
-
-	new_dog = (struct dog *)malloc(sizeof(struct dog));
-	if (new_dog == NULL)
-		printf("Memory allocation failed\n");
 	d->name = name;
 	d->age = age;
 	d->owner = owner;
