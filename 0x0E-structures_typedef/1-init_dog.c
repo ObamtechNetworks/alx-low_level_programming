@@ -14,22 +14,16 @@
 void init_dog(struct dog *d, char *name, float age, char *owner)
 {
 	if (d == NULL)
-	{
-		printf("Invalid pointer\n");
-		return;
-	}
+		exit(1);
 
-	if (age < 0)
-	{
-		printf("Invalid age\n");
-		return;
-	}
+	if (age <= 0)
+		exit(1);
 
 	if (name == NULL)
-		return;
+		exit(1);
 
 	if (owner == NULL)
-		return;
+		exit(1);
 
 	d->name = name;
 	d->age = age;
