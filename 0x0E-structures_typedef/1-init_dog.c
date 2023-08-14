@@ -8,18 +8,17 @@
  * @name: pointer to the name element of struct type
  * @age: the age element of the struct type
  * @owner: pointer to the owner element of the struct type
- * 
  * Return: void
  */
 void init_dog(struct dog *d, char *name, float age, char *owner)
 {
 	struct dog *new_dog;
+
 	new_dog = (struct dog *)malloc(sizeof(struct dog));
 	if (new_dog == NULL)
 		printf("Memory allocation failed\n");
-
-	d -> name = name;
-	d -> age = age;
-	d -> owner = owner;
+	d->name = name;
+	d->age = age;
+	d->owner = owner;
 	new_dog = d;
 }
