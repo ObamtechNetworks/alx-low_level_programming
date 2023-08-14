@@ -13,19 +13,28 @@
  */
 void init_dog(struct dog *d, char *name, float age, char *owner)
 {
-	if (d == NULL)
-		exit(1);
+	if (name == NULL)
+	{
+		printf("Invalid name\n");
+		return;
+	}
 
 	if (age <= 0)
-		exit(1);
-
-	if (name == NULL)
-		exit(1);
+	{
+		printf("Invalid age\n");
+		return;
+	}
 
 	if (owner == NULL)
-		exit(1);
+	{
+		printf("Invalid owner\n");
+		return;
+	}
 
-	d->name = name;
-	d->age = age;
-	d->owner = owner;
+	if (d != NULL)
+	{
+		d->name = name;
+		d->age = age;
+		d->owner = owner;
+	}
 }
