@@ -1,7 +1,5 @@
 #include <stdlib.h>
 #include "dog.h"
-#include <stdio.h>
-#include <ctype.h>
 
 /**
  * free_dog - a function that frees dogs (allocatd in memory)
@@ -10,6 +8,7 @@
  */
 void free_dog(dog_t *d)
 {
-	if (d == NULL)
-		free(d);
+	free(d->name);
+	free(d->owner);
+	free(d);
 }

@@ -1,4 +1,3 @@
-cat 5-main.c
 #include <stdio.h>
 #include "dog.h"
 

@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include "dog.h"
 #include <stdio.h>
-#include <ctype.h>
 
 /**
  * init_dog - a function that initializes a variable of type "struct dog"
