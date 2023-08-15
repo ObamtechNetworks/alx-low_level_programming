@@ -15,7 +15,7 @@ dog_t *new_dog(char *name, float age, char *owner)
 	/*create the new struct*/
 	dog_t *dog;
 	char *namecpy, *ownercpy;
-	int len1, len2, i, j, l, m;
+	int len1 = 0, len2 = 0, i, j, l, m;
 
 	/* get length of name and owner*/
 	for (i = 0; name[len1]; i++)
@@ -24,18 +24,27 @@ dog_t *new_dog(char *name, float age, char *owner)
 		len2++;
 
 	/* allocate space for copies of name and owner*/
-	namecpy = malloc(sizeof(name) * len1 + 1);
+	namecpy = malloc(sizeof(char) * len1 + 1);
 	if (namecpy == NULL)
+	{
+		free(namecpy);
 		return (NULL);
-	ownercpy = malloc(sizeof(owner) * len2 + 1);
+	}
+	ownercpy = malloc(sizeof(char) * len2 + 1);
 	if (ownercpy == NULL)
+	{
+		free(ownercpy);
 		return (NULL);
+	}
 
 	/* allocate space in memory for new dog*/
 	dog = (dog_t *)malloc(sizeof(dog_t));
 	/*check for malloc failure*/
 	if (dog == NULL)
+	{
+		free(dog);
 		return (NULL);
+	}
 
 	/*copy value of name and owner into new space*/
 	for (l = 0; l < len1; l++)
