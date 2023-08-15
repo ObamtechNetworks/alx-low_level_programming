@@ -24,10 +24,8 @@ char *_strdup(char *str)
 	dup = malloc(size * sizeof(char));
 	/*handle malloc return if charAr is NULL */
 	if (dup == NULL)
-	{
 		return (NULL);
-		exit(1);
-	}
+
 	strcpy(dup, str);
 	return (dup);
 }
@@ -55,15 +53,24 @@ dog_t *new_dog(char *name, float age, char *owner)
 
 	dog = (dog_t *)malloc(sizeof(dog_t));
 	if (dog == NULL)
+		return (NULL);
+	
+	dog->name = _strdup(name);
+	if (dog->name == NULL)
 	{
 		free(dog);
 		return (NULL);
 	}
-	if (dog != NULL)
+	
+	dog->age = age;
+	
+	dog->owner = _strdup(owner);
+	if (dog->owner == NULL)
 	{
-		dog->name = _strdup(name);
-		dog->age = age;
-		dog->owner = _strdup(owner);
+		free(dog->name);
+		free(dog);
+		return (NULL);
 	}
+
 	return (dog);
 }
