@@ -12,7 +12,7 @@
  */
 char *_strdup(char *str)
 {
-	unsigned int size;
+	size_t size;
 	char *dup;
 	/*care for when str == NULL */
 	if (str == NULL)
