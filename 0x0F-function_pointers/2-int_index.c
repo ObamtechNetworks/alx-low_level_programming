@@ -10,13 +10,12 @@
 int int_index(int *array, int size, int (*cmp)(int))
 {
 	int i = 0; /* for looping around the list to make comparisons */
-	int found_index; /* index of the found element after comparison*/
+	int found_index = -1, error = -1; /* index of the found element after comparison*/
 	/*check for edge cases */
-	if (size <= 0)
-		found_index = -1;
-
 	if (array != NULL && cmp != NULL)
 	{
+		if (size <= 0)
+			return (error);
 		while (i < size)
 		{
 			if (cmp(array[i]) > 0)
@@ -24,8 +23,6 @@ int int_index(int *array, int size, int (*cmp)(int))
 				found_index = i;
 				break;
 			}
-			else
-				found_index = -1;
 			i++;
 		}
 	}
