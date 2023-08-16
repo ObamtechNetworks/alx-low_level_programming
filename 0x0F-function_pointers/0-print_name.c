@@ -10,7 +10,7 @@
 void print_name(char *name, void(*f)(char *))
 {
 	/*check for edge cases */
-	if (name != NULL)
+	if (name != NULL && f != NULL)
 		/*points to the funtion -> print*/
 		f(name);
 }
