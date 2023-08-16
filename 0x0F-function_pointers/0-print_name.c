@@ -9,6 +9,13 @@
 
 void print_name(char *name, void(*f)(char *))
 {
+	/*check for edge cases */
+	if (name == NULL)
+	{
+		printf("Enter a valid name");
+		name = "";
+	}
+
 	/*points to the funtion -> print*/
 	f(name);
 }
