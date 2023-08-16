@@ -10,7 +10,8 @@
 int int_index(int *array, int size, int (*cmp)(int))
 {
 	int i = 0; /* for looping around the list to make comparisons */
-	int found_index = -1, error = -1; /* index of the found element after comparison*/
+	int found_index = -1;/* index of the found element after comparison*/;
+	int err = -1;
 	/*check for edge cases */
 	if (array != NULL && cmp != NULL)
 	{
