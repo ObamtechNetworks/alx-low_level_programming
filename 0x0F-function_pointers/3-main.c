@@ -31,14 +31,18 @@ int main(int argc, char **argv)
 	operator = argv[2];
 
 	/* ensure that the operator is only a single character */
-	if (strlen(operator) > 1)
+	if (strlen(operator) != 1)
 	{
 		printf("Error\n");
 		exit(99);
 	}
-	if (get_op_func(operator) != NULL)
-		result = get_op_func(operator)(num1, num2);
 
-	printf("%d\n", result);
+	if (get_op_func(operator) != NULL)
+	{
+		result = get_op_func(operator)(num1, num2);
+		printf("%d\n", result);
+	}
+	printf("Error\n");
+	exit(99);
 	return (0);
 }
