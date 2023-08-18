@@ -34,13 +34,8 @@ void print_float(va_list args)
 void print_string(va_list args)
 {
 	char *s = va_arg(args, char *);
-
-	if (s != NULL)
-	{
-		printf("%s", s);
-	}
-	s = "(nil)";
-	printf("%s", s);
+	
+	s == NULL ? printf("%s", "(nil)") : printf("%s", s);
 }
 
 /**
@@ -66,23 +61,22 @@ void print_all(const char * const format, ...)
 	va_start(args, format); /*retrieve argumets based on format*/
 
 	/*use a while loop to loop through the given arguments */
-	while (format[j] != '\0')
+	while (format != NULL && format[j] != '\0')
 	{
 		i = 0;
-		while (check[i].fmt != NULL)
+		while (check[i].fmt != NULL && format != NULL)
 		{
 			if (format[j] == *(check[i].fmt))
 			{
-				if (found) /* if found */
-				{
-					printf(", "); /* add comma/space*/
-				}
+				found == 1 ? printf(", ") : (found = 0);
 				check[i].print_arg(args);
 				found = 1; /*set match to true to fmt rest*/
 				break;
 			}
 			i++;
 		}
+		if (format == NULL || strcmp(format, "") == 0)
+			return;
 		j++;
 	}
 	va_end(args);
