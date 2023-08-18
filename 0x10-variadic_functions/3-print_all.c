@@ -24,7 +24,7 @@ void print_int(va_list args)
  */
 void print_float(va_list args)
 {
-	printf("%f", va_args(args, double);
+	printf("%f", va_arg(args, double));
 }
 /**
  * print_string - function that prints characters
