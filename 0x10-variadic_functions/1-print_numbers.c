@@ -26,8 +26,7 @@ void print_numbers(const char *separator, const unsigned int n, ...)
 		printf("%d", args_list);
 
 		/* print separator only after an argument */
-		
-		/* print separators only when it's not NULL*/
+		/* and also print separators only when it's not NULL*/
 		if (separator != NULL)
 		{
 			if (i < n - 1)
