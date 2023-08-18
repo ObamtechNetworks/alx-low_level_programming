@@ -1,0 +1,91 @@
+#include "variadic_functions.h"
+/**
+ * print_char - prints cahr
+ * @args: the list of arguments
+ */
+void print_char(va_list args)
+{
+	printf("%c", va_arg(args, int));
+}
+/**
+ * print_int - prints integers
+ * @args: the list of arguments
+ * Return: nothing
+ */
+void print_int(va_list args)
+{
+	printf("%d", va_arg(args, int));
+}
+/**
+ * print_float - prints flating numbers
+ * @args: the list of arguments
+ * Return: nothing
+ */
+void print_float(va_list args)
+{
+	printf("%f", va_arg(args, double));
+}
+/**
+ * print_string - prints string
+ * @args: the list of arguments
+ * Return: nothing
+ */
+void print_string(va_list args)
+{
+	char *s = va_arg(args, char *);
+	/*check for case when string is NULL*/
+	if (s == NULL)
+		s = "(nil)";
+	printf("%s", s);
+}
+/**
+ * print_all - a function that prints anything
+ * @format: a list of arguments passed to the function
+ * Return: nothing
+ */
+void print_all(const char * const format, ...)
+{
+	/* declare local variable and array of struct for matching specifiers*/
+	check_case cases[] = {
+		{"%c", print_char},
+		{"%i", print_int},
+		{"%f", print_float},
+		{"%s", print_string},
+		{NULL, NULL}
+	};
+	int i, is_found; /*isfound is like a bool for the loop*/
+	const char *str;
+	/*invoke macro to start iterating variable arguments */
+	va_list args;
+	/* begin retrieve the listed arguments follwing last arg pattern*/
+	va_start(args, format);
+	str = format; /*save format into a pointer to keep track of iteration*/
+	/*loop through specified string */
+	while (*str != '\0')
+	{
+		is_found = 0; /*initialize found and i*/
+		i = 0;
+		/*check for matching case while givven string is not NULL*/
+		while (cases[i].check != NULL && cases[i].print_arg != NULL)
+		{
+			/*since we are dealing wt cases of len 2, so strncmp*/
+			if (strncmp(str, cases[i].check, 2) == 0)
+			{
+				/*set found variable to be 1 (true)*/
+				is_found = 1;
+				cases[i].print_arg(args); /*call the poitner function*/
+				str += 2; /*move to next string to check*/
+				break; /*brk inner loop & move to next match*/
+			}
+			i++; /*move to next given format*/
+		}
+		/*if no match is found*/
+		if (!(is_found))
+		{
+			_putchar(*str); /*prints separator / other characters*/
+			str++; /*consume other char if available*/
+		}
+	}
+	va_end(args);
+	printf("\n"); /*print new line*/
+}

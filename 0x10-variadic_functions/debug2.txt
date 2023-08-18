@@ -7,8 +7,7 @@
 void print_char(va_list args)
 {
 	int c = va_arg(args, int);
-
-	printf("%c", c);
+	_putchar(c);
 }
 /**
  * print_int - function that prints integers
@@ -18,7 +17,6 @@ void print_char(va_list args)
 void print_int(va_list args)
 {
 	int num = va_arg(args, int);
-
 	printf("%d", num);
 }
 /**
@@ -29,24 +27,18 @@ void print_int(va_list args)
 void print_float(va_list args)
 {
 	double num = va_arg(args, double);
-
 	printf("%f", num);
 }
 /**
- * print_string - function that prints characters
+ * print_char - function that prints characters
  * @args: argument to print
  * Return: nothing
  */
 void print_string(va_list args)
 {
 	char *s = va_arg(args, char *);
-
-	if (s != NULL)
-	{
-		printf("%s", s);
-		return;
-	}
-	s = "(nil)";
+	if (s == NULL)
+		s = "(nil)";
 	printf("%s", s);
 }
 
@@ -66,31 +58,37 @@ void print_all(const char * const format, ...)
 		{NULL, NULL}
 	};
 	/*other local variables */
-	int i, j = 0, found = 0;
+	int i;
+	int found; /*variable to continue loop or not*/
+	const char *str;
 	/*begin variable argument list for iteration*/
 	va_list args;
-
 	va_start(args, format); /*retrieve argumets based on format*/
 
+	str = format;
 	/*use a while loop to loop through the given arguments */
-	while (format[j] != '\0')
+	while (*str != '\0')
 	{
+		found = 0; /*assume nothing is checked yet */
 		i = 0;
 		while (check[i].fmt != NULL)
 		{
-			if (format[j] == *(check[i].fmt))
+			/*compare given argument with format*/
+			if (*str == *(check[i].fmt))
 			{
-				if (found) /* if found */
-				{
-					printf(", "); /* add comma/space*/
-				}
+				found = 1; /*element is found, check another*/
+				/*call the corresponding function*/
 				check[i].print_arg(args);
-				found = 1; /*set match to true to fmt rest*/
 				break;
 			}
 			i++;
 		}
-		j++;
+
+		if (!found)
+		{
+			_putchar(*str);
+		}
+	       str++;/*move pointer to next argument*/
 	}
 	va_end(args);
 	printf("\n");
