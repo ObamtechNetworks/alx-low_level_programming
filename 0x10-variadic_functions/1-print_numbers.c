@@ -16,10 +16,6 @@ void print_numbers(const char *separator, const unsigned int n, ...)
 	/*begin the macro to iterate variable arguments */
 	va_list args;
 
-	/* check for cases */
-	if (separator == NULL)
-		return;
-
 	/* start the macro to retrieve the listed arguments follwing last arg*/
 	va_start(args, n);
 
@@ -30,8 +26,13 @@ void print_numbers(const char *separator, const unsigned int n, ...)
 		printf("%d", args_list);
 
 		/* print separator only after an argument */
-		if (i < n - 1)
-			printf("%s", separator);
+		
+		/* print separators only when it's not NULL*/
+		if (separator != NULL)
+		{
+			if (i < n - 1)
+				printf("%s", separator);
+		}
 	}
 	/* end variable arguments macro */
 	va_end(args);
