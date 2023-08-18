@@ -9,7 +9,7 @@
 
 /**
  * struct format - Short description
- * @fmt: the format  and type to check for 
+ * @fmt: the format  and type to check for
  * @print_arg: a pointer to the function to print the corresponding type
  * Description: This structure contains the cases for the different
  * types and format specifier when printing arguments
