@@ -34,7 +34,7 @@ void print_float(va_list args)
 void print_string(va_list args)
 {
 	char *s = va_arg(args, char *);
-	
+
 	s == NULL ? printf("%s", "(nil)") : printf("%s", s);
 }
 
@@ -75,8 +75,6 @@ void print_all(const char * const format, ...)
 			}
 			i++;
 		}
-		if (format == NULL || strcmp(format, "") == 0)
-			return;
 		j++;
 	}
 	va_end(args);
