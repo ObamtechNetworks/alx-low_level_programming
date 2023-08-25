@@ -5,9 +5,10 @@ section .text
 	extern printf
 	global main
 main:
-	xor rax, rax ;clear rax, return value to 0
 	push rbp
 	mov rdi, format
+	xor rax, rax ;clear rax, return value to 0
         call printf
+	add rsp, 8 ; clean up
 	pop rbp
 	ret
