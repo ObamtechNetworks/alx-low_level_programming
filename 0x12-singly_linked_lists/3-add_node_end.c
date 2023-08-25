@@ -37,6 +37,7 @@ list_t *add_node_end(list_t **head, const char *str)
 	}
 	/*set the last NODE TO NEW NODE*/
 	traverse->next = new_node_end;
+	new_node_end->next = NULL;
 
 	/*return new node if not null*/
 	return (new_node_end);
