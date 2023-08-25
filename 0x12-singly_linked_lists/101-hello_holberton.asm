@@ -7,6 +7,7 @@ section .text
 main:
 	push rbp
 	mov rdi, format
-	call printf
+	xor rax, rax ;Clear rax before calling printf
+        call printf
 	pop rbp
 	ret
