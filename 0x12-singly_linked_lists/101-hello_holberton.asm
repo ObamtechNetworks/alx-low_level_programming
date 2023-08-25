@@ -10,5 +10,4 @@ main:
 	xor rax, rax ;clear rax, return value to 0
         call printf
 	add rsp, 8 ; clean up
-	pop rbp
 	ret
