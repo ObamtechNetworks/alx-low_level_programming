@@ -14,6 +14,11 @@ list_t *add_node_end(list_t **head, const char *str)
 	list_t *new_node_end;
 	list_t *traverse;/*to traverse the list till NULL*/
 	/*allocate space for new node in memory*/
+
+	/*edge cases*/
+	if (str == NULL)
+		return (NULL);
+
 	new_node_end = malloc(sizeof(list_t));
 	if (new_node_end == NULL)
 		return (NULL);
@@ -34,10 +39,9 @@ list_t *add_node_end(list_t **head, const char *str)
 		{
 			traverse = traverse->next;/*keep moving till the end of list*/
 		}
-	}
 	/*set the last NODE TO NEW NODE*/
 	traverse->next = new_node_end;
-	new_node_end->next = NULL;
+	}
 
 	/*return new node if not null*/
 	return (new_node_end);
