@@ -12,9 +12,13 @@ listint_t *add_nodeint(listint_t **head, const int n)
 
 	/**allocate space for new node*/
 	new_node = malloc(sizeof(listint_t));
+	/*handle malloc failure*/
+	if (new_node == NULL)
+		return (NULL);
 
 	/*set data value of new node*/
 	new_node->n = n;
+
 
 	/*set new_node to point what head is pointing to: head-link*/
 	new_node->next = *head;
