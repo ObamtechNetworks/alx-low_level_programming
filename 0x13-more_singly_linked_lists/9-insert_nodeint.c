@@ -24,6 +24,10 @@ listint_t *insert_nodeint_at_index(listint_t **head, unsigned int idx, int n)
 	/*set data value of new node*/
 	node_to_insert->n = n;
 
+	/*check if index is 1, then if true set it to be the head*/
+	if (idx == 1)
+		*head = node_to_insert;
+
 	/*traverse the node down to the desired position*/
 	while (idx != 1 && traverse_ptr != NULL)
 	{
@@ -32,10 +36,8 @@ listint_t *insert_nodeint_at_index(listint_t **head, unsigned int idx, int n)
 	}
 
 	/*if index is impossible, return NULL*/
-	if (idx <= 0)
-	{
+	if (idx == 0)
 		return (NULL);
-	}
 
 	/*update the link of new node to be link of traversed pointer*/
 	node_to_insert->next = traverse_ptr->next;
