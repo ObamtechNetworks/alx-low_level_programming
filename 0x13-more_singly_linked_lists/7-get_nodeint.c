@@ -5,16 +5,14 @@
  * @index: the index to look for
  * Return: the node base on given index
  */
-int get_nodeint_at_index(listint_t *head, unsigned int index)
+listint_t *get_nodeint_at_index(listint_t *head, unsigned int index)
 {
 	/* create a pointer to hold the head node */
-	listint_t ptr_head = NULL;
+	listint_t *ptr_head = head;
 
 	/*check if head is NULL*/
-	if (head == NULL)
+	if (ptr_head == NULL)
 		return (NULL);
-
-	ptr_head = head;
 
 	/*loop through the nodes and get their index */
 	while (ptr_head != NULL)
@@ -22,11 +20,12 @@ int get_nodeint_at_index(listint_t *head, unsigned int index)
 		/*use index 0 as base for returning node*/
 
 		if (index == 0)
-			return (ptr);
+			return (ptr_head);
 
 		/*move to next node */
-		ptr = ptr->next;
+		ptr_head = ptr_head->next;
 		index--;/*decrements index in case it starts beyond 0*/
 	}
-	return (NULL)/*if no valid index*/
+
+	return (NULL);/*if no valid index*/
 }
