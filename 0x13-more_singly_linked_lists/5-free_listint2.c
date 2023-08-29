@@ -7,7 +7,7 @@
 void free_listint2(listint_t **head)
 {
 	/*create a pointer to the head*/
-	listint_t *current_node = NULL;
+	listint_t *node_to_free = NULL;
 
 	/*only check if head is not null before start to free*/
 	if (*head != NULL)
@@ -16,13 +16,13 @@ void free_listint2(listint_t **head)
 		while ((*head)->next != NULL)
 		{
 			/*set current node to be what head is pointing to*/
-			current_node = *head;
+			node_to_free = *head;
 			
 			/*set head to point to next node*/
 			*head = (*head)->next;
 			
 			/*free the curr node,what head was prev.pointing to*/
-			free(current_node);
+			free(node_to_free);
 		}
 		
 		/*free head, last node*/
@@ -31,5 +31,4 @@ void free_listint2(listint_t **head)
 
 	/*set head to NULL*/
 	*head = NULL;
-
 }
