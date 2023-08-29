@@ -32,7 +32,7 @@ listint_t *insert_nodeint_at_index(listint_t **head, unsigned int idx, int n)
 	}
 
 	/*if index is impossible, return NULL*/
-	if (idx == 0)
+	if (idx <= 0)
 	{
 		return (NULL);
 	}
@@ -40,8 +40,8 @@ listint_t *insert_nodeint_at_index(listint_t **head, unsigned int idx, int n)
 	/*update the link of new node to be link of traversed pointer*/
 	node_to_insert->next = traverse_ptr->next;
 
-	/*update the addr.of prev. node  to be new node's addr. i.e the head*/
-	traverse_ptr = node_to_insert;
+	/*update the link of prev. node  to be new node's addr. i.e the head*/
+	traverse_ptr->next = node_to_insert;
 
 	/*return the new_node*/
 	return (node_to_insert);
