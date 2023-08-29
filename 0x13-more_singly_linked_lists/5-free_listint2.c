@@ -9,6 +9,10 @@ void free_listint2(listint_t **head)
 	/*create a pointer to the head*/
 	listint_t *node_to_free = NULL;
 
+	/*check if head is null*/
+	if (*head == NULL)
+		return;
+
 	/*only check if head is not null before start to free*/
 	if (*head != NULL)
 	{
