@@ -17,18 +17,17 @@ void free_listint2(listint_t **head)
 		{
 			/*set current node to be what head is pointing to*/
 			node_to_free = *head;
-			
+
 			/*set head to point to next node*/
 			*head = (*head)->next;
-			
+
 			/*free the curr node,what head was prev.pointing to*/
 			free(node_to_free);
 		}
-		
 		/*free head, last node*/
 		free(*head);
 	}
-
 	/*set head to NULL*/
 	*head = NULL;
+
 }
