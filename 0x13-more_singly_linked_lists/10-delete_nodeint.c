@@ -22,6 +22,7 @@ int delete_nodeint_at_index(listint_t **head, unsigned int index)
 		*head = node_to_del->next;/*head points to next node*/
 		free(node_to_del);/*free current head, (as node to del)*/
 		node_to_del = NULL;/*set delete node to be NULL*/
+		return (1);
 	}
 	/*if index is not 0 then traverse to the index*/
 	while (index > 0 && node_to_del != NULL)
