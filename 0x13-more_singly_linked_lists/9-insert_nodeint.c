@@ -8,8 +8,7 @@
  */
 listint_t *insert_nodeint_at_index(listint_t **head, unsigned int idx, int n)
 {
-	/*create the new node*/
-	listint_t *node_to_insert = NULL;
+	listint_t *node_to_insert = NULL;/*create the new node*/
 	/*create a pointer to the head for traversing to desired index*/
 	listint_t *traverse_ptr = *head;
 	/*allocate space for new node in memory*/
@@ -19,30 +18,31 @@ listint_t *insert_nodeint_at_index(listint_t **head, unsigned int idx, int n)
 		return (NULL);
 
 	node_to_insert->n = n;/*set data value of new node*/
-	/*check if index is 0, then that's impossible return (NULL)*/
-	if (idx == 0)
+	if (idx == 0)/*check if index is 0,then it's impossible return (NULL)*/
 	{
 		free(node_to_insert);
 		return (NULL);
 	}
-	/*check if index is 1, then if true set it to be the head*/
-	if (idx == 1)
+	if (idx == 1)/*check if index is 1,then if true set it to be the head*/
 	{
 		node_to_insert->next = *head;
 		*head = node_to_insert;
 		return (node_to_insert);
 	}
-	/*traverse the node down to the desired position*/
-	while (idx != 1 && traverse_ptr != NULL)
+	/*traverse the node down to the desired position, (before index)*/
+	while (idx > 1 && traverse_ptr != NULL)
 	{
 		idx--;
 		traverse_ptr = traverse_ptr->next;
 	}
-	if (traverse_ptr == NULL)/*if index is impossible, return NULL*/
-	{
+	if (idx > 1)
+	{/*if after traversing to NULL,& index is still > 1,it's impossible*/
 		free(node_to_insert);
 		return (NULL);
 	}
+	if (traverse_ptr == NULL)/*this means node becomes the tail*/
+		*head = node_to_insert;
+
 	/*update the link of new node to be link of traversed pointer*/
 	node_to_insert->next = traverse_ptr->next;
 	/*update the link of prev. node  to be new node's addr. i.e the head*/
