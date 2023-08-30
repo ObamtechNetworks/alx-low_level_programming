@@ -39,13 +39,10 @@ int delete_nodeint_at_index(listint_t **head, unsigned int index)
 	/*if node_to_del == NULL, nothing to delete, return -1*/
 	if (node_to_del == NULL)
 		return (-1);
-
 	/*else, set prev_node link to next node of node to del*/
 	prev_node->next = node_to_del->next;
-
 	/*then delete the node to delete and set to NULL*/
 	free(node_to_del);
 	node_to_del = NULL;
-
 	return (1);/*returns 1 on success*/
 }
