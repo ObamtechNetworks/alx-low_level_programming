@@ -40,12 +40,12 @@ listint_t *insert_nodeint_at_index(listint_t **head, unsigned int idx, int n)
 		free(node_to_insert);
 		return (NULL);
 	}
-	if (traverse_ptr == NULL)/*this means node becomes the tail*/
-		*head = node_to_insert;
-
 	/*update the link of new node to be link of traversed pointer*/
 	node_to_insert->next = traverse_ptr->next;
 	/*update the link of prev. node  to be new node's addr. i.e the head*/
 	traverse_ptr->next = node_to_insert;
+
+	if (traverse_ptr == NULL)/*this means node becomes the tail*/
+		*head = node_to_insert;
 	return (node_to_insert);/*return the new_node*/
 }
