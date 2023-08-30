@@ -17,13 +17,8 @@ listint_t *insert_nodeint_at_index(listint_t **head, unsigned int idx, int n)
 	if (node_to_insert == NULL)
 		return (NULL);
 
-	node_to_insert->n = n;/*set data value of new node*/
-	if (idx <= 0)/*check if index is 0,then it's impossible return (NULL)*/
-	{
-		free(node_to_insert);
-		return (NULL);
-	}
-	if (idx == 1)/*check if index is 1,then if true set it to be the head*/
+	node_to_insert->n = n;/*set data value of new node*/	
+	if (idx == 0)/*since index starts 0,set it to be the head*/
 	{
 		node_to_insert->next = *head;
 		*head = node_to_insert;
