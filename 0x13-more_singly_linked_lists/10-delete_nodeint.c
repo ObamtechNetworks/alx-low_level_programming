@@ -7,40 +7,44 @@
  */
 int delete_nodeint_at_index(listint_t **head, unsigned int index)
 {
-	/*create a pointer to head to traverse to index*/
-	listint_t *node_to_del = *head;
+	/*create a pointer to head as prev node, and anoter as cur.node*/
+	listint_t *prev_node = *head;/*pointer to the previous node*/
+	listint_t *node_to_del = *head;/*the node to delete*/
 
-	/*edge cases*/
-	if (index == 0)/*this definitely is the head, so free head8*/
+	/*check if head is NULL*/
+	if (*head == NULL)
+		return (-1);/*empty nothing to free*/
+
+	/*check if index is 0, so that is the head, then free it*/
+	if (index == 0)
 	{
-		free(*head);
-		*head = NULL;
-		return (1);
+		/*set head to point to next link of node to del*/
+		*head = node_to_del->next;/*head points to next node*/
+		free(node_to_del);/*free current head, (as node to del)*/
+		node_to_del = NULL;/*set delete node to be NULL*/
 	}
-
-	if (*head == NULL)/*empty node*/
-		return (-1);
-
-	/*traverse to index to retrieve node*/
-	while (index > 1 && node_to_del != NULL)
+	/*if index is not 0 then traverse to the index*/
+	while (index > 0 && node_to_del != NULL)
 	{
-		index--;
-		node_to_del = node_to_del->next;
+		/*set previous node to be the node to del*/
+		prev_node = node_to_del;
+		node_to_del = node_to_del->next;/*move node to del to idx*/
+		index--;/*decrement index as node will move to the position*/
 	}
-	/*if node is not found, return 1*/
-	if (index > 1)
+	if (index > 0)/*what to free is beyond the list*/
+	{
 		return (-1);
-
-	/*check if node_to_del is NULL already*/
+	}
+	/*if node_to_del == NULL, nothing to delete, return -1*/
 	if (node_to_del == NULL)
 		return (-1);
 
-	/*delete the pointer*/
-	free(node_to_del->next);/*free at memory*/
-	free(node_to_del);/*free the node itself*/
+	/*else, set prev_node link to next node of node to del*/
+	prev_node->next = node_to_del->next;
 
-	/*update prev.node to new node or delete space*/
-	(*head)->next = NULL;
+	/*then delete the node to delete and set to NULL*/
+	free(node_to_del);
+	node_to_del = NULL;
 
 	return (1);/*returns 1 on success*/
 }
