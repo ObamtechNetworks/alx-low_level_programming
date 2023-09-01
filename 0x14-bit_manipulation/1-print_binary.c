@@ -18,7 +18,7 @@ void print_binary(unsigned long int n)
 	{
 		print_binary(n >> 1);
 	}
-	
+
 	if (n & 1)/*bitwise & of the value, to return 1 if true*/
 		_putchar('1');
 	else
