@@ -6,21 +6,21 @@
  */
 void print_binary(unsigned long int n)
 {
-	/*using recursive method*/
-	/*recursively right shift the number, till zero*/
+	/*edge case when n == 0*/
 	if (n == 0)
 	{
 		_putchar('0');
+		return;
 	}
-	else
+	/*using recursive method*/
+	/*recursively right shift the number, till zero*/
+	if (n > 1)
 	{
-		if (n > 0)
-		{
-			print_binary(n >> 1);
-			if (n & 1)/*bitwise & of the value, to return 1 if true*/
-				_putchar('1');
-			else
-				_putchar('0');/*else prints 0*/
-		}
+		print_binary(n >> 1);
 	}
+	
+	if (n & 1)/*bitwise & of the value, to return 1 if true*/
+		_putchar('1');
+	else
+		_putchar('0');/*else prints 0*/
 }
