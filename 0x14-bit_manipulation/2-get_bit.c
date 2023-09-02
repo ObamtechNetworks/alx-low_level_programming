@@ -8,7 +8,7 @@
 int get_bit(unsigned long int n, unsigned int index)
 {
 	/*check for out of bounds or out of range index*/
-	if (index >= sizeof(unsigned long int) * 8)/*when index is greater than 32bit*/
+	if (index >= sizeof(unsigned long int) * 8)/*when index is >32bit*/
 		return (-1);
 	/*get the right most bit value, but leftshifting the 1 by index*/
 	/*then compare result by performing bitwise AND on the numb and index*/
