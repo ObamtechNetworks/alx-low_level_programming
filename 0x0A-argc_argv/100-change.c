@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 		{
 			cur_min = cents / given_coins[i];
 			min_coin = min_coin + cur_min;
-			cents = (cents - cur_min) * given_coins[i];
+			cents = cents - (cur_min * given_coins[i]);
 		}
 		i++;
 	}
