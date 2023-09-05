@@ -81,12 +81,12 @@ int main(int argc, char **argv)
 	}
 	/*call the cp function*/
 	cp(open_src, open_dest, src_file, dest_file);
-	if (close(src_file) == -1)
+	if (close(open_src) == -1)
 	{
 		dprintf(2, "Error: Can't close fd %d\n", open_src);
 		exit(100);
 	}
-	if (close(dest_file) == -1)
+	if (close(open_dest) == -1)
 	{
 		dprintf(2, "Error: Can't close fd %d\n", open_dest);
 		exit(100);
