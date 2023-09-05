@@ -11,7 +11,7 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 {
 	char buffer[BUFF_SIZE];/*max buff size*/
 	/*integers to hold file descriptors*/
-	int read_src, write_src, cls_src, cls_dest;
+	int read_src, write_src;
 	/*READ SRC FILE AND COPY INTO DEST*/
 	while ((read_src = read(src_fd, buffer, BUFF_SIZE)) > 0)
 	{
@@ -27,16 +27,17 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 		dprintf(2, "Error: Can't read from file %s\n", src_path);
 		exit(98);
 	}
-	cls_src = close(src_fd);/*handle close errors*/
-	if (cls_src == -1)
+
+	/*handle close errors*/
+	if (close(src_fd) == -1)
 	{
-		dprintf(2, "Error: Can't close fd %d", src_fd);
+		dprintf(2, "Error: Can't close fd %d\n", src_fd);
 		exit(100);
 	}
-	cls_dest = close(dest_fd);
-	if (cls_dest == -1)
+
+	if (close(des_fd) == -1)
 	{
-		dprintf(2, "Error: Can't close fd %d", dest_fd);
+		dprintf(2, "Error: Can't close fd %d\n", dest_fd);
 		exit(100);
 	}
 }
@@ -49,8 +50,18 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 int main(int argc, char **argv)
 {
 	/*create pointers to src and dest files, & as argument vect*/
-	const char *src_file = argv[1], *dest_file = argv[2];
+	const char *src_file, *dest_file;
 	int open_src, open_dest;/*variables to hold fd*/
+
+	/*cater for number of arguments*/
+	if (argc != 3)
+	{
+		dprintf(2, "Usage: %s file_from file_to\n", argv[0]);
+		exit(97);
+	}
+	/*point to the files based on arguments*/
+	src_file = argv[1];
+	dest_file = argv[2];
 
 	if (src_file == NULL)/*if source file does not exist*/
 	{
@@ -73,11 +84,7 @@ int main(int argc, char **argv)
 		close(open_src);/*close the src fd*/
 		exit(99);
 	}
-	if (argc != 3)
-	{/*cater for number of arguments*/
-		dprintf(2, "Usage: %s file_from file_to\n", argv[0]);
-		exit(97);
-	}
+
 	/*call the cp function*/
 	cp(open_src, open_dest, src_file, dest_file);
 
