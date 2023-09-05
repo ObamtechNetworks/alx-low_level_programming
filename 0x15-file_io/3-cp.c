@@ -16,14 +16,14 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 	while ((read_src = read(src_fd, buffer, BUFF_SIZE)) > 0)
 	{
 		write_src = write(dest_fd, buffer, read_src);
-		if (write_src == -1 || write_src != read_src)
+		if (write_src == -1 ||  write_src != read_src)
 		{
-			close(src_fd);
+			cls_src = close(src_fd);
 			dprintf(2, "Can't write to %s\n", dest_path);
 			exit(99);
 		}
 	}
-	if (read_src == -1)
+	if (read_src == -1 )
 	{
 		dprintf(2, "Error: Can't read from file %s\n", src_path);
 		exit(98);
