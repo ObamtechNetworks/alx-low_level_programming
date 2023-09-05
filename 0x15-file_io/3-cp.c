@@ -23,7 +23,7 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 			exit(99);
 		}
 	}
-	if (read_src == -1 )
+	if (read_src == -1)
 	{
 		dprintf(2, "Error: Can't read from file %s\n", src_path);
 		exit(98);
