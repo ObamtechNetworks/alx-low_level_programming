@@ -35,7 +35,7 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 		exit(100);
 	}
 
-	if (close(des_fd) == -1)
+	if (close(dest_fd) == -1)
 	{
 		dprintf(2, "Error: Can't close fd %d\n", dest_fd);
 		exit(100);
