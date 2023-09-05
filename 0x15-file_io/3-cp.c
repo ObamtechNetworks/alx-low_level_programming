@@ -26,22 +26,7 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 	if (read_src == -1)
 	{
 		dprintf(2, "Error: Can't read from file %s\n", src_path);
-		close(src_fd);
 		exit(98);
-	}
-	cls_src = close(src_fd);
-	cls_dest = close(dest_fd);
-	/*handle close errors*/
-	if (cls_src == -1)
-	{
-		dprintf(2, "Error: Can't close fd %d\n", src_fd);
-		exit(100);
-	}
-
-	if (cls_dest == -1)
-	{
-		dprintf(2, "Error: Can't close fd %d\n", dest_fd);
-		exit(100);
 	}
 }
 /**
