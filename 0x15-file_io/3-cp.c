@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 	}
 	/*open files only if they exist: src & dest and handle errors*/
 	open_src = open(src_file, O_RDONLY);
-	if (open_src == -1)
+	if (open_src == -1 || errno == ENOENT)
 	{
 		dprintf(2, "Error: Can't read from file %s\n", src_file);
 		close(open_src);/*close the source file*/

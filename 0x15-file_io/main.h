@@ -11,6 +11,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <stdlib.h>
+#include <errno.h>
 /*--------------------*/
 
 /*function prototypes/signatures*/
