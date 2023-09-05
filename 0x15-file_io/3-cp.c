@@ -11,7 +11,7 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 {
 	char buffer[BUFF_SIZE];/*max buff size*/
 	/*integers to hold file descriptors*/
-	int read_src, write_src, cls_src, cls_dest;
+	int read_src, write_src;
 	/*READ SRC FILE AND COPY INTO DEST*/
 	while ((read_src = read(src_fd, buffer, BUFF_SIZE)) > 0)
 	{
