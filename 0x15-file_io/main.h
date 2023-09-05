@@ -1,6 +1,9 @@
 #ifndef _MAIN_H
 #define _MAIN_H
 
+/*define max_buff_size*/
+#define BUFF_SIZE 1024
+
 /*--------------*/
 /*standard headers*/
 #include <unistd.h>
