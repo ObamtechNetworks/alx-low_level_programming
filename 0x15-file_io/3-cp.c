@@ -11,13 +11,14 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 {
 	char buffer[BUFF_SIZE];/*max buff size*/
 	/*integers to hold file descriptors*/
-	int read_src, write_src;
+	int read_src, write_src, cls_src, cls_dest;
 	/*READ SRC FILE AND COPY INTO DEST*/
 	while ((read_src = read(src_fd, buffer, BUFF_SIZE)) > 0)
 	{
 		write_src = write(dest_fd, buffer, read_src);
 		if (write_src == -1)
 		{
+			close(src_fd);
 			dprintf(2, "Can't write to %s\n", dest_path);
 			exit(99);
 		}
@@ -25,17 +26,19 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 	if (read_src == -1)
 	{
 		dprintf(2, "Error: Can't read from file %s\n", src_path);
+		close(src_fd);
 		exit(98);
 	}
-
+	cls_src = close(src_fd);
+	cls_dest = close(dest_fd);
 	/*handle close errors*/
-	if (close(src_fd) == -1)
+	if (cls_src == -1)
 	{
 		dprintf(2, "Error: Can't close fd %d\n", src_fd);
 		exit(100);
 	}
 
-	if (close(dest_fd) == -1)
+	if (cls_dest == -1)
 	{
 		dprintf(2, "Error: Can't close fd %d\n", dest_fd);
 		exit(100);
@@ -53,21 +56,13 @@ int main(int argc, char **argv)
 	const char *src_file, *dest_file;
 	int open_src, open_dest;/*variables to hold fd*/
 
-	/*cater for number of arguments*/
 	if (argc != 3)
-	{
+	{/*cater for number of arguments*/
 		dprintf(2, "Usage: %s file_from file_to\n", argv[0]);
 		exit(97);
 	}
-	/*point to the files based on arguments*/
-	src_file = argv[1];
+	src_file = argv[1];/*point to the files based on arguments*/
 	dest_file = argv[2];
-
-	if (src_file == NULL)/*if source file does not exist*/
-	{
-		dprintf(2, "Error: Can't read from file %s\n", src_file);
-		exit(98);
-	}
 	/*open files only if they exist: src & dest and handle errors*/
 	open_src = open(src_file, O_RDONLY);
 	if (open_src == -1 || errno == ENOENT)
@@ -84,9 +79,17 @@ int main(int argc, char **argv)
 		close(open_src);/*close the src fd*/
 		exit(99);
 	}
-
 	/*call the cp function*/
 	cp(open_src, open_dest, src_file, dest_file);
-
+	if (close(src_file) == -1)
+	{
+		dprintf(2, "Error: Can't close fd %d\n", open_src);
+		exit(100);
+	}
+	if (close(dest_file) == -1)
+	{
+		dprintf(2, "Error: Can't close fd %d\n", open_dest);
+		exit(100);
+	}
 	return (0);
 }
