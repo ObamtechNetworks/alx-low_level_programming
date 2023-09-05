@@ -9,9 +9,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <fcntl.h>
-#include <sys/types.h>
 #include <stdlib.h>
-#include <errno.h>
 /*--------------------*/
 
 /*function prototypes/signatures*/

@@ -18,7 +18,6 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 		write_src = write(dest_fd, buffer, read_src);
 		if (write_src == -1 ||  write_src != read_src)
 		{
-			cls_src = close(src_fd);
 			dprintf(2, "Can't write to %s\n", dest_path);
 			exit(99);
 		}
@@ -36,7 +35,6 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 		dprintf(2, "Error: Can't close fd %d\n", src_fd);
 		exit(100);
 	}
-
 	if (cls_dest == -1)
 	{
 		dprintf(2, "Error: Can't close fd %d\n", dest_fd);
@@ -64,14 +62,13 @@ int main(int argc, char **argv)
 	dest_file = argv[2];
 	/*open files only if they exist: src & dest and handle errors*/
 	open_src = open(src_file, O_RDONLY);
-	if (open_src == -1 || errno == ENOENT)
+	if (open_src == -1)
 	{
 		dprintf(2, "Error: Can't read from file %s\n", src_file);
-		close(open_src);/*close the source file*/
 		exit(98);
 	}
 	/*open dest file,trunc if not empty or create if does not exist*/
-	open_dest = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, 00664);
+	open_dest = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (open_dest == -1)
 	{
 		dprintf(2, "Error: Can't write to %s\n", dest_file);
