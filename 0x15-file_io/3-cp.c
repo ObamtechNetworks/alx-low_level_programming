@@ -11,7 +11,7 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 {
 	char buffer[BUFF_SIZE];/*max buff size*/
 	/*integers to hold file descriptors*/
-	int read_src, write_src;
+	int read_src, write_src, cls_src, cls_dest;
 	/*READ SRC FILE AND COPY INTO DEST*/
 	while ((read_src = read(src_fd, buffer, BUFF_SIZE)) > 0)
 	{
@@ -27,6 +27,20 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 	{
 		dprintf(2, "Error: Can't read from file %s\n", src_path);
 		exit(98);
+	}
+	cls_src = close(src_fd);
+	cls_dest = close(dest_fd);
+	/*handle close errors*/
+	if (cls_src == -1)
+	{
+		dprintf(2, "Error: Can't close fd %d\n", src_fd);
+		exit(100);
+	}
+
+	if (cls_dest == -1)
+	{
+		dprintf(2, "Error: Can't close fd %d\n", dest_fd);
+		exit(100);
 	}
 }
 /**
@@ -66,15 +80,6 @@ int main(int argc, char **argv)
 	}
 	/*call the cp function*/
 	cp(open_src, open_dest, src_file, dest_file);
-	if (close(open_src) == -1)
-	{
-		dprintf(2, "Error: Can't close fd %d\n", open_src);
-		exit(100);
-	}
-	if (close(open_dest) == -1)
-	{
-		dprintf(2, "Error: Can't close fd %d\n", open_dest);
-		exit(100);
-	}
+
 	return (0);
 }
