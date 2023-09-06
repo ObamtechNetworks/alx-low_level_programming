@@ -4,28 +4,6 @@
  * @path: the path to the file
  * Return: a non negative value if success
  */
-int file_exists(const char *path)
-{
-	return (access(path, F_OK) != -1);
-}
-/**
- * is_readable - checks if a file is readable
- * @path: the path to the file
- * Return: a non negative value on success
- */
-int is_readable(const char *path)
-{
-	return (access(path, R_OK) != -1);
-}
-/**
- * is_writeable - checks if a file is writeable
- * @path: the path to the file
- * Return: a non-negative integer on success
- */
-int is_writeable(const char *path)
-{
-	return (access(path, W_OK) != -1);
-}
 /**
  * cp - function that copies src file into destination
  * @src_fd: the source file descriptor
@@ -37,26 +15,27 @@ int is_writeable(const char *path)
 void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 {
 	char buffer[BUFF_SIZE];/*max buff size*/
-	int read_fd, write_fd;/*integers to hold file descriptors*/
-
-	if (access(src_path, F_OK) == -1 || !is_readable(src_path))
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_path);
-		exit(98);
-	}
-	if (!is_readable(dest_path) || !is_writeable(dest_path))
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_path);
-		exit(99);
-	}
+	/*integers to hold file descriptors*/
+	int read_fd, write_fd;
+	/*READ SRC FILE AND COPY INTO DEST*/
 	while ((read_fd = read(src_fd, buffer, BUFF_SIZE)) > 0)
-	{/*READ SRC FILE AND COPY INTO DEST*/
+	{
 		write_fd = write(dest_fd, buffer, read_fd);
 		if (write_fd == -1 ||  write_fd != read_fd)
 		{
+			close(src_fd);
+			close(dest_fd);
 			dprintf(STDERR_FILENO, "Can't write to %s\n", dest_path);
 			exit(99);
 		}
+	}
+
+	if (read_fd == -1)
+	{
+		close(src_fd);
+		close(dest_fd);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_path);
+		exit(98);
 	}
 	/*handle close errors*/
 	if (close(src_fd) == -1)
@@ -81,6 +60,7 @@ int main(int argc, char **argv)
 	/*create pointers to src and dest files, & as argument vect*/
 	const char *src_file, *dest_file;
 	int open_src, open_dest;/*variables to hold fd*/
+	mode_t permission = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
 
 	if (argc != 3)
 	{/*cater for number of arguments*/
@@ -89,27 +69,25 @@ int main(int argc, char **argv)
 	}
 	src_file = argv[1];/*point to the files based on arguments*/
 	dest_file = argv[2];
-	/*check source file doesn't exist or is not readable or writeable*/
-	if (!file_exists(src_file) || !is_readable(src_file)
-			|| !is_writeable(src_file))
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_file);
-		exit(98);
-	}
-	open_src = open(src_file, O_RDONLY);/*open files:src/dest/handle errs*/
-	if (open_src == -1)
+	/*open files only if they exist: src & dest and handle errors*/
+	open_src = open(src_file, O_RDONLY);
+	if (open_src == -1 || errno == ENOENT || errno == EACCES)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_file);
 		exit(98);
 	}
 	/*open dest file,trunc if not empty or create if does not exist*/
-	open_dest = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, 00664);
-	if (open_dest == -1)
+	open_dest = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, permission);
+	if (open_dest == -1 || errno == EACCES || errno == ENOENT)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
+		close(open_src);/*close the src fd*/
 		exit(99);
 	}
-	cp(open_src, open_dest, src_file, dest_file);/*call the cp function*/
+	/*call the cp function*/
+	cp(open_src, open_dest, src_file, dest_file);
+
+	/*close file descriptors*/
 	close(open_src);
 	close(open_dest);
 	return (0);
