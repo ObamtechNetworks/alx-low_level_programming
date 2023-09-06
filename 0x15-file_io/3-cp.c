@@ -80,19 +80,15 @@ int main(int argc, char **argv)
 	}
 	src_file = argv[1];/*point to the files based on arguments*/
 	dest_file = argv[2];
-	/*if src file does not exist or source file is not readable*/
-	if (access(src_file, F_OK) == -1 || (access(src_file, R_OK) == -1))
-		exit_98(src_file);
 
 	src_fd = open(src_file, O_RDONLY);
 	if (src_fd == -1)
 		exit_98(src_file);/*error while opening file*/
-	/*if dest file exists but not readable*/
-	if ((access(dest_file, F_OK) != -1) && (access(dest_file, R_OK) == -1))
-		exit_99(dest_file);
-	else
-		dest_fd = open(dest_file, O_WRONLY | O_CREAT
-				| O_TRUNC, permission);
+	/*create file with permission*/
+	dest_fd = open(dest_file, O_WRONLY | O_CREAT | O_EXCL
+			| O_SYNC, permission);
+	if (dest_fd == -1 || errno == EEXIST)
+		dest_fd = open(dest_file, O_WRONLY | O_TRUNC | O_SYNC);
 	if (dest_fd == -1)
 	{
 		close(src_fd);/*close the src fd*/
