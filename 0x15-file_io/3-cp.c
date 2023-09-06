@@ -7,36 +7,29 @@
  * @dest_path: the destination file path
  * Return: nothing
  */
-void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
+void cp(const char *src_path, const char *dest_path, int src_fd, int dest_fd)
 {
 	char buffer[BUFF_SIZE];/*max buff size*/
 	/*integers to hold file descriptors*/
 	int read_fd, write_fd;
 	/*READ SRC FILE AND COPY INTO DEST*/
-	while ((read_fd = read(src_fd, buffer, sizeof(buffer))) > 0)
+	while ((read_fd = read(src_fd, buffer, BUFF_SIZE)) > 0)
 	{
 		write_fd = write(dest_fd, buffer, read_fd);
-		if (write_fd == -1)
+		if (write_fd == -1 ||  write_fd != read_fd)
 		{
+			close(src_fd);
+			close(dest_fd);
 			dprintf(STDERR_FILENO, "Can't write to %s\n", dest_path);
 			exit(99);
 		}
 	}
 	if (read_fd == -1)
 	{
+		close(src_fd);
+		close(dest_fd);
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_path);
 		exit(98);
-	}
-	/*handle close errors*/
-	if (close(src_fd) == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", src_fd);
-		exit(100);
-	}
-	if (close(dest_fd) == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", dest_fd);
-		exit(100);
 	}
 }
 /**
@@ -49,7 +42,7 @@ int main(int argc, char **argv)
 {
 	/*create pointers to src and dest files, & as argument vect*/
 	const char *src_file, *dest_file;
-	int open_src, open_dest;/*variables to hold fd*/
+	int src_fd, dest_fd;
 	mode_t permission = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
 
 	if (argc != 3)
@@ -59,31 +52,36 @@ int main(int argc, char **argv)
 	}
 	src_file = argv[1];/*point to the files based on arguments*/
 	dest_file = argv[2];
-	if (access(dest_file, R_OK) == -1 || access(dest_file, W_OK) == -1)
+	if (access(dest_file, R_OK != -1) || access(dest_file, W_OK) != -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
 		exit(99);
 	}
-	if (access(src_file, R_OK == -1))
+	if (access(src_file, R_OK != -1))
+		src_fd = open(src_file, O_RDONLY);
+	else
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_file);
 		exit(98);
 	}
-	/*open files only if they exist: src & dest and handle errors*/
-	open_src = open(src_file, O_RDONLY);
-	if (open_src == -1)
+	dest_fd = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, permission);
+	if (dest_fd == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_file);
-		exit(98);
-	}
-	open_dest = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, permission);
-	if (open_dest == -1)
-	{
-		close(open_src);
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
+		close(src_fd);/*close the src fd*/
 		exit(99);
 	}
-	/*call the cp function*/
-	cp(open_src, open_dest, src_file, dest_file);
+	cp(src_file, dest_file, src_fd, dest_fd);
+	/*handle close errors*/
+	if (close(src_fd) == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", src_fd);
+		exit(100);
+	}
+	if (close(dest_fd) == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", dest_fd);
+		exit(100);
+	}
 	return (0);
 }
