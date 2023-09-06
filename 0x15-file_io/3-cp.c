@@ -13,7 +13,7 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 	/*integers to hold file descriptors*/
 	int read_fd, write_fd;
 	/*READ SRC FILE AND COPY INTO DEST*/
-	while ((read_fd = read(src_fd, buffer, BUFF_SIZE)) > 0)
+	while ((read_fd = read(src_fd, buffer, sizeof(buffer))) > 0)
 	{
 		write_fd = write(dest_fd, buffer, read_fd);
 		if (write_fd == -1)
