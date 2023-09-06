@@ -80,16 +80,14 @@ int main(int argc, char **argv)
 	}
 	src_file = argv[1];/*point to the files based on arguments*/
 	dest_file = argv[2];
-	if (access(src_file, F_OK) == -1)/*check if source file exists*/
-		exit_98(src_file);/*one directly below if exist and readble*/
-	if ((access(src_file, R_OK) != -1) && (access(src_file, F_OK) != -1))
-	{
-		src_fd = open(src_file, O_RDONLY);
-		if (src_fd == -1)
-			exit_98(src_file);/*error while opening file*/
-	}
-	else
+	/*if src file does not exist or source file is not readable*/
+	if (access(src_file, F_OK) == -1 || (access(src_file, R_OK) == -1))
 		exit_98(src_file);
+
+	src_fd = open(src_file, O_RDONLY);
+	if (src_fd == -1)
+		exit_98(src_file);/*error while opening file*/
+	/*if dest file exists but not readable*/
 	if ((access(dest_file, F_OK) != -1) && (access(dest_file, R_OK) == -1))
 		exit_99(dest_file);
 	dest_fd = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, permission);
