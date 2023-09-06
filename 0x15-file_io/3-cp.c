@@ -11,33 +11,31 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 {
 	char buffer[BUFF_SIZE];/*max buff size*/
 	/*integers to hold file descriptors*/
-	int read_src, write_src, cls_src, cls_dest;
+	int read_src, write_src;
 	/*READ SRC FILE AND COPY INTO DEST*/
 	while ((read_src = read(src_fd, buffer, BUFF_SIZE)) > 0)
 	{
 		write_src = write(dest_fd, buffer, read_src);
 		if (write_src == -1 ||  write_src != read_src)
 		{
-			dprintf(2, "Can't write to %s\n", dest_path);
+			dprintf(STDERR_FILENO, "Can't write to %s\n", dest_path);
 			exit(99);
 		}
 	}
 	if (read_src == -1)
 	{
-		dprintf(2, "Error: Can't read from file %s\n", src_path);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_path);
 		exit(98);
 	}
-	cls_src = close(src_fd);
-	cls_dest = close(dest_fd);
 	/*handle close errors*/
-	if (cls_src == -1)
+	if (close(src_fd) == -1)
 	{
-		dprintf(2, "Error: Can't close fd %d\n", src_fd);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", src_fd);
 		exit(100);
 	}
-	if (cls_dest == -1)
+	if (close(dest_fd) == -1)
 	{
-		dprintf(2, "Error: Can't close fd %d\n", dest_fd);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", dest_fd);
 		exit(100);
 	}
 }
@@ -52,10 +50,11 @@ int main(int argc, char **argv)
 	/*create pointers to src and dest files, & as argument vect*/
 	const char *src_file, *dest_file;
 	int open_src, open_dest;/*variables to hold fd*/
+	mode_t permission = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
 
 	if (argc != 3)
 	{/*cater for number of arguments*/
-		dprintf(2, "Usage: %s file_from file_to\n", argv[0]);
+		dprintf(STDERR_FILENO, "Usage: %s file_from file_to\n", argv[0]);
 		exit(97);
 	}
 	src_file = argv[1];/*point to the files based on arguments*/
@@ -64,14 +63,14 @@ int main(int argc, char **argv)
 	open_src = open(src_file, O_RDONLY);
 	if (open_src == -1)
 	{
-		dprintf(2, "Error: Can't read from file %s\n", src_file);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_file);
 		exit(98);
 	}
 	/*open dest file,trunc if not empty or create if does not exist*/
-	open_dest = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	open_dest = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, permission);
 	if (open_dest == -1)
 	{
-		dprintf(2, "Error: Can't write to %s\n", dest_file);
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
 		close(open_src);/*close the src fd*/
 		exit(99);
 	}
