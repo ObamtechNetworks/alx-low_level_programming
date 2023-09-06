@@ -20,6 +20,16 @@ void exit_99(const char *dest_path)
 	exit(99);
 }
 /**
+ * exit_src_100 - exits src file descriptor with code 100
+ * @src_fd: the src file descriptor
+ * Return: nothing
+ */
+void exit_src_100(int src_fd)
+{
+	dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", src_fd);
+	exit(100);
+}
+/**
  * cp - function that copies src file into destination
  * @src_fd: the source file descriptor
  * @dest_fd: the destination file descriptor
@@ -50,16 +60,6 @@ void cp(const char *src_path, const char *dest_path, int src_fd, int dest_fd)
 		close(dest_fd);
 		exit_98(src_path);
 	}
-	if (close(src_fd) == -1)/*handle close errors*/
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", src_fd);
-		exit(100);
-	}
-	if (close(dest_fd) == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", dest_fd);
-		exit(100);
-	}
 }
 /**
  * main - a prgm that copies the content of a file to another file
@@ -69,9 +69,8 @@ void cp(const char *src_path, const char *dest_path, int src_fd, int dest_fd)
  */
 int main(int argc, char **argv)
 {
-	/*create pointers to src and dest files, & as argument vect*/
-	const char *src_file, *dest_file;
-	int src_fd, dest_fd;
+	const char *src_file, *dest_file;/*ptrs-> src/dest files*/
+	int src_fd, dest_fd, cls_src, cls_dest;
 	mode_t permission = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
 
 	if (argc != 3)
@@ -81,8 +80,8 @@ int main(int argc, char **argv)
 	}
 	src_file = argv[1];/*point to the files based on arguments*/
 	dest_file = argv[2];
-	if ((access(dest_file, F_OK) != -1) && (access(dest_file, R_OK) == -1))
-		exit_99(dest_file);
+	if (access(src_file, F_OK) == -1)/*check if source file exists*/
+		exit_98(src_file);/*one directly below if exist and readble*/
 	if ((access(src_file, R_OK) != -1) && (access(src_file, F_OK) != -1))
 	{
 		src_fd = open(src_file, O_RDONLY);
@@ -91,6 +90,8 @@ int main(int argc, char **argv)
 	}
 	else
 		exit_98(src_file);
+	if ((access(dest_file, F_OK) != -1) && (access(dest_file, R_OK) == -1))
+		exit_99(dest_file);
 	dest_fd = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, permission);
 	if (dest_fd == -1)
 	{
@@ -98,8 +99,14 @@ int main(int argc, char **argv)
 		exit_99(dest_file);
 	}
 	cp(src_file, dest_file, src_fd, dest_fd);/*copy files*/
-
-	close(src_fd);
-	close(dest_fd);
+	cls_src = close(src_fd); /*close file descriptors*/
+	cls_dest = close(dest_fd);
+	if (cls_src == -1)/*handle close errors*/
+		exit_src_100(src_fd);
+	if (cls_dest == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", src_fd);
+		exit(100);
+	}
 	return (0);
 }
