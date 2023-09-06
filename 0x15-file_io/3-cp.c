@@ -73,11 +73,6 @@ int main(int argc, char **argv)
 	int src_fd, dest_fd;
 	mode_t permission = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
 
-	if (dup2(STDOUT_FILENO, STDERR_FILENO) == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Failed STDERR to STDOUT\n");
-		return (1);
-	}
 	if (argc != 3)
 	{/*cater for number of arguments*/
 		dprintf(STDERR_FILENO, "Usage: %s file_from file_to\n", argv[0]);
@@ -104,7 +99,8 @@ int main(int argc, char **argv)
 		exit_99(dest_file);
 	}
 	cp(src_file, dest_file, src_fd, dest_fd);/*copy files*/
-	if (close(src_fd) == -1)/*handle close errors*/
+	/*handle close errors*/
+	if (close(src_fd) == -1)
 		exit_100(src_fd);
 	if (close(dest_fd) == -1)
 		exit_100(dest_fd);
