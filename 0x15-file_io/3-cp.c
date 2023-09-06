@@ -31,22 +31,17 @@ void cp(const char *src_path, const char *dest_path, int src_fd, int dest_fd)
 {
 	char buffer[BUFF_SIZE];/*max buff size*/
 	/*integers to hold file descriptors*/
-	int read_fd, write_fd, total_bytes_write = 0;
+	int read_fd, write_fd;
 	/*READ SRC FILE AND COPY INTO DEST*/
 	while ((read_fd = read(src_fd, buffer, BUFF_SIZE)) > 0)
 	{
 		/*keep track of how many bytes is written*/
-		while (total_bytes_write < read_fd)
+		write_fd = write(dest_fd, buffer, read_fd);
+		if (write_fd == -1 || write_fd < read_fd)
 		{
-			write_fd = write(dest_fd, buffer + total_bytes_write,
-					read_fd - total_bytes_write);
-				if (write_fd == -1)
-				{
-					close(src_fd);
-					close(dest_fd);
-					exit_99(dest_path);
-				}
-			total_bytes_write += write_fd;
+			close(src_fd);
+			close(dest_fd);
+			exit_99(dest_path);
 		}
 	}
 	if (read_fd == -1)
@@ -77,15 +72,15 @@ int main(int argc, char **argv)
 	src_file = argv[1];/*point to the files based on arguments*/
 	dest_file = argv[2];
 	if ((access(dest_file, F_OK) != -1) && (access(dest_file, R_OK) == -1))
-	{
 		exit_99(dest_file);
-	}
-	if (access(src_file, R_OK) != -1 && access(src_file, F_OK) != -1)
+	if ((access(src_file, R_OK) != -1) && (access(src_file, F_OK) != -1))
 	{
 		src_fd = open(src_file, O_RDONLY);
 		if (src_fd == -1)
 			exit_98(src_file);/*error while opening file*/
 	}
+	else
+		exit_98(src_file);
 	dest_fd = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, permission);
 	if (dest_fd == -1)
 	{
