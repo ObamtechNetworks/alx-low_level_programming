@@ -41,15 +41,11 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 
 	if (access(src_path, F_OK) == -1 || !is_readable(src_path))
 	{
-		close(src_fd);
-		close(dest_fd);
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_path);
 		exit(98);
 	}
 	if (!is_readable(dest_path) || !is_writeable(dest_path))
 	{
-		close(src_fd);
-		close(dest_fd);
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_path);
 		exit(99);
 	}
@@ -58,8 +54,6 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 		write_fd = write(dest_fd, buffer, read_fd);
 		if (write_fd == -1 ||  write_fd != read_fd)
 		{
-			close(src_fd);
-			close(dest_fd);
 			dprintf(STDERR_FILENO, "Can't write to %s\n", dest_path);
 			exit(99);
 		}
@@ -112,13 +106,11 @@ int main(int argc, char **argv)
 	open_dest = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, 00664);
 	if (open_dest == -1)
 	{
-		if ((file_exists(dest_file) && !is_readable(dest_file)))
-		{
-			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
-			close(open_src);/*close the src fd*/
-			exit(99);
-		}
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
+		exit(99);
 	}
 	cp(open_src, open_dest, src_file, dest_file);/*call the cp function*/
+	close(open_src);
+	close(open_dest);
 	return (0);
 }
