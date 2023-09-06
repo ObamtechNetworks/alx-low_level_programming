@@ -98,15 +98,8 @@ int main(int argc, char **argv)
 		exit_99(dest_file);
 	}
 	cp(src_file, dest_file, src_fd, dest_fd);/*copy files*/
-	if (close(src_fd) == -1)/*handle close errors*/
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", src_fd);
-		exit(100);
-	}
-	if (close(dest_fd) == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", dest_fd);
-		exit(100);
-	}
+
+	close(src_fd);
+	close(dest_fd);
 	return (0);
 }
