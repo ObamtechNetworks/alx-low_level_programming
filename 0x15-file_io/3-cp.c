@@ -31,16 +31,22 @@ void cp(const char *src_path, const char *dest_path, int src_fd, int dest_fd)
 {
 	char buffer[BUFF_SIZE];/*max buff size*/
 	/*integers to hold file descriptors*/
-	int read_fd, write_fd;
+	int read_fd, write_fd, total_bytes_write = 0;
 	/*READ SRC FILE AND COPY INTO DEST*/
 	while ((read_fd = read(src_fd, buffer, BUFF_SIZE)) > 0)
 	{
-		write_fd = write(dest_fd, buffer, read_fd);
-		if (write_fd == -1 ||  write_fd < read_fd)
+		/*keep track of how many bytes is written*/
+		while (total_bytes_write < read_fd)
 		{
-			close(src_fd);
-			close(dest_fd);
-			exit_99(dest_path);
+			write_fd = write(dest_fd, buffer + total_bytes_write,
+					read_fd - total_bytes_write);
+				if (write_fd == -1)
+				{
+					close(src_fd);
+					close(dest_fd);
+					exit_99(dest_path);
+				}
+			total_bytes_write += write_fd;
 		}
 	}
 	if (read_fd == -1)
