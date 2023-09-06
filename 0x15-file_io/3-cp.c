@@ -57,7 +57,7 @@ void cp(const char *src_path, const char *dest_path, int src_fd, int dest_fd)
 	while ((read_fd = read(src_fd, buffer, BUFF_SIZE)) > 0)
 	{
 		write_fd = write(dest_fd, buffer, read_fd);
-		if (write_fd == -1 ||  write_fd != read_fd)
+		if (write_fd == -1 ||  write_fd < read_fd)
 		{
 			close(src_fd);
 			close(dest_fd);
@@ -110,12 +110,8 @@ int main(int argc, char **argv)
 	cp(src_file, dest_file, src_fd, dest_fd);
 	/*handle close errors*/
 	if (close(src_fd) == -1)
-	{
 		exit_fd_100(src_fd, dest_fd);
-	}
 	if (close(dest_fd) == -1)
-	{
 		exit_fd_100(src_fd, dest_fd);
-	}
 	return (0);
 }
