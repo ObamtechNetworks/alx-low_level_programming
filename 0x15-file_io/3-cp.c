@@ -41,7 +41,7 @@ void cp(const char *src_path, const char *dest_path, int src_fd, int dest_fd)
 {
 	char buffer[BUFF_SIZE];/*max buff size*/
 	/*integers to hold file descriptors*/
-	int read_fd, write_fd, cls_src, cls_dest;
+	int read_fd, write_fd;
 	/*READ SRC FILE AND COPY INTO DEST*/
 	while ((read_fd = read(src_fd, buffer, BUFF_SIZE)) > 0)
 	{
@@ -60,8 +60,8 @@ void cp(const char *src_path, const char *dest_path, int src_fd, int dest_fd)
 		close(dest_fd);
 		exit_98(src_path);
 	}
-	cls_src = close(src_fd); /*close file descriptors*/
-	cls_dest = close(dest_fd);
+	close(src_fd); /*close file descriptors*/
+	close(dest_fd);
 }
 /**
  * main - a prgm that copies the content of a file to another file
