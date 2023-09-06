@@ -80,7 +80,7 @@ int main(int argc, char **argv)
 	{
 		exit_99(dest_file);
 	}
-	if (access(src_file, R_OK != -1) && access(src_file, F_OK) != -1)
+	if (access(src_file, R_OK) != -1 && access(src_file, F_OK) != -1)
 	{
 		src_fd = open(src_file, O_RDONLY);
 		if (src_fd == -1)
