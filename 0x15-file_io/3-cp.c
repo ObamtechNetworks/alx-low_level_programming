@@ -59,18 +59,22 @@ int main(int argc, char **argv)
 	}
 	src_file = argv[1];/*point to the files based on arguments*/
 	dest_file = argv[2];
-	/*open files only if they exist: src & dest and handle errors*/
-	open_src = open(src_file, O_RDONLY);
-	if (open_src == -1 || errno == ENOENT || errno == EACCES)
+	if (access(dest_file, R_OK) == -1 || access(dest_file, W_OK) == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
+		exit(99);
+	}
+	if (access(src_file, R_OK == -1))
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_file);
 		exit(98);
 	}
-	if (access(dest_file, R_OK) == -1 || access(dest_file, W_OK) == -1)
+	/*open files only if they exist: src & dest and handle errors*/
+	open_src = open(src_file, O_RDONLY);
+	if (open_src == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
-		close(open_src);
-		exit(99);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_file);
+		exit(98);
 	}
 	open_dest = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, permission);
 	if (open_dest == -1)
@@ -81,9 +85,5 @@ int main(int argc, char **argv)
 	}
 	/*call the cp function*/
 	cp(open_src, open_dest, src_file, dest_file);
-
-	/*close file descriptors*/
-	close(open_src);
-	close(open_dest);
 	return (0);
 }
