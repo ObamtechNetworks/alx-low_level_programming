@@ -75,7 +75,7 @@ int main(int argc, char **argv)
 
 	if (argc != 3)
 	{/*cater for number of arguments*/
-		dprintf(STDERR_FILENO, "Usage: %s file_from file_to\n", argv[0]);
+		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
 		exit(97);
 	}
 	src_file = argv[1];/*point to the files based on arguments*/
