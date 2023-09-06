@@ -97,13 +97,6 @@ int main(int argc, char **argv)
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_file);
 		exit(98);
 	}
-	/*check if dest file already exists and is not readable or writeable*/
-	if ((file_exists(dest_file) && !is_readable(dest_file))
-			|| !is_writeable(dest_file))
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
-		exit(99);
-	}
 	open_src = open(src_file, O_RDONLY);/*open files:src/dest/handle errs*/
 	if (open_src == -1)
 	{
@@ -111,10 +104,17 @@ int main(int argc, char **argv)
 		exit(98);
 	}
 	/*open dest file,trunc if not empty or create if does not exist*/
-	open_dest = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (open_dest == -1 || errno == EACCES || errno == ENOENT)
+	open_dest = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, 00664);
+	if (open_dest == -1)
 	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
 		close(open_src);/*close the src fd*/
+		exit(99);
+	}
+	if ((file_exists(dest_file) && !is_readable(dest_file))
+			|| !is_writeable(dest_file))/*if file && !readable*/
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
 		exit(99);
 	}
 	cp(open_src, open_dest, src_file, dest_file);/*call the cp function*/
