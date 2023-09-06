@@ -103,7 +103,7 @@ int main(int argc, char **argv)
 		exit_src_100(src_fd);
 	if (cls_dest == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", src_fd);
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", dest_fd);
 		exit(100);
 	}
 	return (0);
