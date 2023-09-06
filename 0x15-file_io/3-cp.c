@@ -41,13 +41,13 @@ void cp(const char *src_path, const char *dest_path, int src_fd, int dest_fd)
 {
 	char buffer[BUFF_SIZE];/*max buff size*/
 	/*integers to hold file descriptors*/
-	int read_fd, write_fd;
+	int read_fd, write_fd, cls_src, cls_dest;
 	/*READ SRC FILE AND COPY INTO DEST*/
 	while ((read_fd = read(src_fd, buffer, BUFF_SIZE)) > 0)
 	{
 		/*keep track of how many bytes is written*/
 		write_fd = write(dest_fd, buffer, read_fd);
-		if (write_fd == -1 || write_fd < read_fd)
+		if (write_fd == -1)
 		{
 			close(src_fd);
 			close(dest_fd);
@@ -59,6 +59,15 @@ void cp(const char *src_path, const char *dest_path, int src_fd, int dest_fd)
 		close(src_fd);
 		close(dest_fd);
 		exit_98(src_path);
+	}
+	cls_src = close(src_fd); /*close file descriptors*/
+	cls_dest = close(dest_fd);
+	if (cls_src == -1)/*handle close errors*/
+		exit_src_100(src_fd);
+	if (cls_dest == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", dest_fd);
+		exit(100);
 	}
 }
 /**
@@ -90,7 +99,9 @@ int main(int argc, char **argv)
 	/*if dest file exists but not readable*/
 	if ((access(dest_file, F_OK) != -1) && (access(dest_file, R_OK) == -1))
 		exit_99(dest_file);
-	dest_fd = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, permission);
+	else
+		dest_fd = open(dest_file, O_WRONLY | O_CREAT
+				| O_TRUNC, permission);
 	if (dest_fd == -1)
 	{
 		close(src_fd);/*close the src fd*/
