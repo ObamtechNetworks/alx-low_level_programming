@@ -62,13 +62,6 @@ void cp(const char *src_path, const char *dest_path, int src_fd, int dest_fd)
 	}
 	cls_src = close(src_fd); /*close file descriptors*/
 	cls_dest = close(dest_fd);
-	if (cls_src == -1)/*handle close errors*/
-		exit_src_100(src_fd);
-	if (cls_dest == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", dest_fd);
-		exit(100);
-	}
 }
 /**
  * main - a prgm that copies the content of a file to another file
