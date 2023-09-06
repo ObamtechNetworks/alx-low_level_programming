@@ -1,5 +1,46 @@
 #include "main.h"
 /**
+ * exit_98 - print exit status and exit with 98
+ * @src_path: - path to source file
+ * Return: nothing
+ */
+void exit_98(const char *src_path)
+{
+	dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_path);
+	exit(98);
+}
+/**
+ * exit_99 - print exit status and exit with 99
+ * @dest_path: path to dest file
+ * Return: nothing
+ */
+void exit_99(const char *dest_path)
+{
+	dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_path);
+	exit(99);
+}
+/**
+ * exit_fd_100 - exits file descriptor with error 100
+ * @src_fd: source file file descriptor
+ * @dest_fd: destination file file descriptor
+ * Return: nothing
+ */
+void exit_fd_100(int src_fd, int dest_fd)
+{
+	if (src_fd)
+	{
+		(void)dest_fd;
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", src_fd);
+		exit(100);
+	}
+	else
+	{
+		(void)src_fd;
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", dest_fd);
+		exit(100);
+	}
+}
+/**
  * cp - function that copies src file into destination
  * @src_fd: the source file descriptor
  * @dest_fd: the destination file descriptor
@@ -20,16 +61,14 @@ void cp(const char *src_path, const char *dest_path, int src_fd, int dest_fd)
 		{
 			close(src_fd);
 			close(dest_fd);
-			dprintf(STDERR_FILENO, "Can't write to %s\n", dest_path);
-			exit(99);
+			exit_99(dest_path);
 		}
 	}
 	if (read_fd == -1)
 	{
 		close(src_fd);
 		close(dest_fd);
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_path);
-		exit(98);
+		exit_98(src_path);
 	}
 }
 /**
@@ -52,36 +91,31 @@ int main(int argc, char **argv)
 	}
 	src_file = argv[1];/*point to the files based on arguments*/
 	dest_file = argv[2];
-	if (access(dest_file, R_OK != -1) || access(dest_file, W_OK) != -1)
+	if ((access(dest_file, F_OK) != -1) && (access(dest_file, R_OK) == -1))
 	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
-		exit(99);
+		exit_99(dest_file);
 	}
-	if (access(src_file, R_OK != -1))
-		src_fd = open(src_file, O_RDONLY);
-	else
+	if (access(src_file, R_OK != -1) && access(src_file, F_OK) != -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_file);
-		exit(98);
+		src_fd = open(src_file, O_RDONLY);
+		if (src_fd == -1)
+			exit_98(src_file);/*error while opening file*/
 	}
 	dest_fd = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, permission);
 	if (dest_fd == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
 		close(src_fd);/*close the src fd*/
-		exit(99);
+		exit_99(dest_file);
 	}
 	cp(src_file, dest_file, src_fd, dest_fd);
 	/*handle close errors*/
 	if (close(src_fd) == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", src_fd);
-		exit(100);
+		exit_fd_100(src_fd, dest_fd);
 	}
 	if (close(dest_fd) == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", dest_fd);
-		exit(100);
+		exit_fd_100(src_fd, dest_fd);
 	}
 	return (0);
 }
