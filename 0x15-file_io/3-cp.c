@@ -69,11 +69,13 @@ int main(int argc, char **argv)
 	if (access(dest_file, R_OK) == -1 || access(dest_file, W_OK) == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
+		close(open_src);
 		exit(99);
 	}
 	open_dest = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, permission);
 	if (open_dest == -1)
 	{
+		close(open_src);
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
 		exit(99);
 	}
