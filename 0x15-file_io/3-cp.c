@@ -60,8 +60,6 @@ void cp(const char *src_path, const char *dest_path, int src_fd, int dest_fd)
 		close(dest_fd);
 		exit_98(src_path);
 	}
-	close(src_fd); /*close file descriptors*/
-	close(dest_fd);
 }
 /**
  * main - a prgm that copies the content of a file to another file
