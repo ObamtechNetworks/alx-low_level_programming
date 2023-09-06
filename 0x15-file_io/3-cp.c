@@ -1,10 +1,5 @@
 #include "main.h"
 /**
- * file_exists - checks if a file exists
- * @path: the path to the file
- * Return: a non negative value if success
- */
-/**
  * cp - function that copies src file into destination
  * @src_fd: the source file descriptor
  * @dest_fd: the destination file descriptor
@@ -21,19 +16,14 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 	while ((read_fd = read(src_fd, buffer, BUFF_SIZE)) > 0)
 	{
 		write_fd = write(dest_fd, buffer, read_fd);
-		if (write_fd == -1 ||  write_fd != read_fd)
+		if (write_fd == -1)
 		{
-			close(src_fd);
-			close(dest_fd);
 			dprintf(STDERR_FILENO, "Can't write to %s\n", dest_path);
 			exit(99);
 		}
 	}
-
 	if (read_fd == -1)
 	{
-		close(src_fd);
-		close(dest_fd);
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_path);
 		exit(98);
 	}
@@ -76,12 +66,15 @@ int main(int argc, char **argv)
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_file);
 		exit(98);
 	}
-	/*open dest file,trunc if not empty or create if does not exist*/
-	open_dest = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, permission);
-	if (open_dest == -1 || errno == EACCES || errno == ENOENT)
+	if (access(dest_file, R_OK) == -1 || access(dest_file, W_OK) == -1)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
-		close(open_src);/*close the src fd*/
+		exit(99);
+	}
+	open_dest = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, permission);
+	if (open_dest == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
 		exit(99);
 	}
 	/*call the cp function*/
