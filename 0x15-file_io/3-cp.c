@@ -107,15 +107,13 @@ int main(int argc, char **argv)
 	open_dest = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, 00664);
 	if (open_dest == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
-		close(open_src);/*close the src fd*/
-		exit(99);
-	}
-	if ((file_exists(dest_file) && !is_readable(dest_file))
-			|| !is_writeable(dest_file))/*if file && !readable*/
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
-		exit(99);
+		if ((file_exists(dest_file) && !is_readable(dest_file))
+				|| !is_writeable(dest_file))
+		{
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
+			close(open_src);/*close the src fd*/
+			exit(99);
+		}
 	}
 	cp(open_src, open_dest, src_file, dest_file);/*call the cp function*/
 	return (0);
