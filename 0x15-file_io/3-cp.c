@@ -70,7 +70,7 @@ void cp(const char *src_path, const char *dest_path, int src_fd, int dest_fd)
 int main(int argc, char **argv)
 {
 	const char *src_file, *dest_file;/*ptrs-> src/dest files*/
-	int src_fd, dest_fd;
+	int src_fd, dest_fd, cls_src, cls_dest;
 	mode_t permission = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
 
 	if (argc != 3)
@@ -96,9 +96,11 @@ int main(int argc, char **argv)
 	}
 	cp(src_file, dest_file, src_fd, dest_fd);/*copy files*/
 	/*handle close errors*/
-	if (close(src_fd) == -1)
+	cls_src = close(src_fd);
+	cls_dest = close(dest_fd);
+	if (cls_src == -1)
 		exit_100(src_fd);
-	if (close(dest_fd) == -1)
+	if (cls_dest == -1)
 		exit_100(dest_fd);
 	return (0);
 }
