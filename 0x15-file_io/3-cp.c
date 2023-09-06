@@ -11,12 +11,12 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 {
 	char buffer[BUFF_SIZE];/*max buff size*/
 	/*integers to hold file descriptors*/
-	int read_src, write_src;
+	int read_fd, write_fd;
 	/*READ SRC FILE AND COPY INTO DEST*/
-	while ((read_src = read(src_fd, buffer, BUFF_SIZE)) > 0)
+	while ((read_fd = read(src_fd, buffer, BUFF_SIZE)) > 0)
 	{
-		write_src = write(dest_fd, buffer, read_src);
-		if (write_src == -1 ||  write_src != read_src)
+		write_fd = write(dest_fd, buffer, read_fd);
+		if (write_fd == -1 ||  write_fd != read_fd)
 		{
 			close(src_fd);
 			close(dest_fd);
@@ -24,7 +24,8 @@ void cp(int src_fd, int dest_fd, const char *src_path, const char *dest_path)
 			exit(99);
 		}
 	}
-	if (read_src == -1)
+
+	if (read_fd == -1)
 	{
 		close(src_fd);
 		close(dest_fd);
@@ -65,14 +66,14 @@ int main(int argc, char **argv)
 	dest_file = argv[2];
 	/*open files only if they exist: src & dest and handle errors*/
 	open_src = open(src_file, O_RDONLY);
-	if (open_src == -1)
+	if (open_src == -1 || errno == ENOENT || errno == EACCES)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", src_file);
 		exit(98);
 	}
 	/*open dest file,trunc if not empty or create if does not exist*/
 	open_dest = open(dest_file, O_WRONLY | O_CREAT | O_TRUNC, permission);
-	if (open_dest == -1)
+	if (open_dest == -1 || errno == EACCES || errno == ENOENT)
 	{
 		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", dest_file);
 		close(open_src);/*close the src fd*/
@@ -81,5 +82,8 @@ int main(int argc, char **argv)
 	/*call the cp function*/
 	cp(open_src, open_dest, src_file, dest_file);
 
+	/*close file descriptors*/
+	close(open_src);
+	close(open_dest);
 	return (0);
 }
