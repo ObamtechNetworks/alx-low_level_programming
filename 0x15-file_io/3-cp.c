@@ -20,27 +20,6 @@ void exit_99(const char *dest_path)
 	exit(99);
 }
 /**
- * exit_fd_100 - exits file descriptor with error 100
- * @src_fd: source file file descriptor
- * @dest_fd: destination file file descriptor
- * Return: nothing
- */
-void exit_fd_100(int src_fd, int dest_fd)
-{
-	if (src_fd)
-	{
-		(void)dest_fd;
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", src_fd);
-		exit(100);
-	}
-	else
-	{
-		(void)src_fd;
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", dest_fd);
-		exit(100);
-	}
-}
-/**
  * cp - function that copies src file into destination
  * @src_fd: the source file descriptor
  * @dest_fd: the destination file descriptor
@@ -107,11 +86,16 @@ int main(int argc, char **argv)
 		close(src_fd);/*close the src fd*/
 		exit_99(dest_file);
 	}
-	cp(src_file, dest_file, src_fd, dest_fd);
-	/*handle close errors*/
-	if (close(src_fd) == -1)
-		exit_fd_100(src_fd, dest_fd);
+	cp(src_file, dest_file, src_fd, dest_fd);/*copy files*/
+	if (close(src_fd) == -1)/*handle close errors*/
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", src_fd);
+		exit(100);
+	}
 	if (close(dest_fd) == -1)
-		exit_fd_100(src_fd, dest_fd);
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", dest_fd);
+		exit(100);
+	}
 	return (0);
 }
