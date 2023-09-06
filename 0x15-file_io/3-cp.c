@@ -47,7 +47,7 @@ void cp(const char *src_path, const char *dest_path, int src_fd, int dest_fd)
 	{
 		/*keep track of how many bytes is written*/
 		write_fd = write(dest_fd, buffer, read_fd);
-		if (write_fd == -1)
+		if (write_fd == -1 || write_fd < read_fd)
 		{
 			close(src_fd);
 			close(dest_fd);
