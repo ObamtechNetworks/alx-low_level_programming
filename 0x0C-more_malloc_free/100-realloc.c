@@ -12,14 +12,13 @@
  */
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
-	/*create local variable, and pointer to new size */
+	/*create variables*/
 	unsigned int i;
 	char *new_ptr, *prev_ptr;
 
 	if (ptr == NULL)
-	{
-		malloc(new_size);
-	}
+		return (malloc(new_size));
+
 	/*set conditions */
 	if (new_size == old_size)
 		return (ptr);
@@ -30,10 +29,11 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 		return (NULL);
 	}
 
-	if (new_size > old_size)
-		new_ptr = malloc(new_size);
-
+	/*allocate buffer for new ptr*/
+	new_ptr = malloc(new_size);
+	/*save prev_ptr address*/
 	prev_ptr = ptr;
+
 	/*copy to new_size old size based on range*/
 	for (i = 0; i < old_size && i < new_size; i++)
 		new_ptr[i] = prev_ptr[i];
