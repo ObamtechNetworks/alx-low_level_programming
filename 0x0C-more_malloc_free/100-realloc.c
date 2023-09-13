@@ -14,9 +14,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
 	/*create local variable, and pointer to new size */
 	unsigned int i;
-	void *new_ptr;
-	unsigned int size_range;
-	char *cast_ptr, *cast_new_ptr;
+	char *new_ptr, *prev_ptr;
 
 	if (ptr == NULL)
 	{
@@ -32,21 +30,15 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 		return (NULL);
 	}
 
-	/*create conditions on range of size to add */
 	if (new_size > old_size)
-		size_range = old_size;
-	else
-		size_range = new_size;
+		new_ptr = malloc(new_size);
 
-	/*cast the pointers for proper typecasting usage */
-	cast_ptr = (char *)ptr;
-	cast_new_ptr = (char *)new_ptr;
-
+	prev_ptr = ptr;
 	/*copy to new_size old size based on range*/
-	for (i = 0; i < size_range; i++)
-		cast_new_ptr[i] = cast_ptr[i];
+	for (i = 0; i < old_size && i < new_size; i++)
+		new_ptr[i] = prev_ptr[i];
 
 	/*FREE POINTER */
 	free(ptr);
-	return (ptr);
+	return (new_ptr);
 }
