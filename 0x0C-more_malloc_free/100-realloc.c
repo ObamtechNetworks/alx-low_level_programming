@@ -18,20 +18,19 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	unsigned int size_range;
 	char *cast_ptr, *cast_new_ptr;
 
+	if (ptr == NULL)
+	{
+		malloc(new_size);
+	}
 	/*set conditions */
 	if (new_size == old_size)
 		return (ptr);
 
-	if (new_size == 0)
+	if (new_size == 0 && ptr != NULL)
 	{
 		free(ptr);
 		return (NULL);
 	}
-	/*create new pointer that holds the new memory space*/
-	new_ptr = malloc(new_size);
-	/* HANDLE MALLOC FAILURE */
-	if (new_ptr == NULL)
-		return (NULL);
 
 	/*create conditions on range of size to add */
 	if (new_size > old_size)
@@ -43,13 +42,11 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	cast_ptr = (char *)ptr;
 	cast_new_ptr = (char *)new_ptr;
 
-	if (ptr != NULL)
-	{
-		 /*copy to new_size old size based on range*/
-		for (i = 0; i < size_range; i++)
-			cast_new_ptr[i] = cast_ptr[i];
-		/*FREE POINTER */
-		free(ptr);
-	}
+	/*copy to new_size old size based on range*/
+	for (i = 0; i < size_range; i++)
+		cast_new_ptr[i] = cast_ptr[i];
+
+	/*FREE POINTER */
+	free(ptr);
 	return (ptr);
 }
