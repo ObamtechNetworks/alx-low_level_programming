@@ -14,22 +14,24 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 {
 	/*create variables*/
 	unsigned int i;
+	/*pointer for copying old space to new space if required*/
 	char *new_ptr, *prev_ptr;
 
+	/*if pointer is NULL, ALLOC size based on new size*/
 	if (ptr == NULL)
 		return (malloc(new_size));
 
-	/*set conditions */
+	/*if new_size is same and old, return the pointer*/
 	if (new_size == old_size)
 		return (ptr);
 
+	/*if new size is 0 and ptr has some space, then free ptr*/
 	if (new_size == 0 && ptr != NULL)
 	{
 		free(ptr);
 		return (NULL);
 	}
-
-	/*allocate buffer for new ptr*/
+	/* else, allocate buffer for new ptr*/
 	new_ptr = malloc(new_size);
 	/*save prev_ptr address*/
 	prev_ptr = ptr;
