@@ -12,7 +12,13 @@ size_t print_dlistint(const dlistint_t *h)
 	/*CASE 1: head and prev of head is empty*/
 	if (h->prev == NULL && h == NULL)
 		return (0);
-	/*CASE2: if prev of head is not NULL*/
+	/*CASE 2: only one node*/
+	if (h->prev == NULL && h != NULL && h->next == NULL)
+	{
+		printf("%d\n", h->n);
+		return (1);
+	}
+	/*CASE3: if prev of head is not NULL*/
 	if (h->prev != NULL)
 	{
 		while (h->prev != NULL) /*TRAVERSE BACK TO the head*/
@@ -21,7 +27,7 @@ size_t print_dlistint(const dlistint_t *h)
 	/*set temp to point to head*/
 	temp = h;
 	/*traverse the list now to print elements*/
-	while (temp)
+	while (temp != NULL)
 	{
 		/*print data at each position*/
 		printf("%d\n", temp->n);
