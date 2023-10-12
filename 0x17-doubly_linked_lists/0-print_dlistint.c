@@ -10,14 +10,8 @@ size_t print_dlistint(const dlistint_t *h)
 	const dlistint_t *temp = NULL;
 	int count = 0; /*intialize a counter for num of nodes*/
 	/*CASE 1: head and prev of head is empty*/
-	if (h->prev == NULL && h == NULL)
+	if (h == NULL)
 		return (0);
-	/*CASE 2: only one node*/
-	if (h->prev == NULL && h != NULL && h->next == NULL)
-	{
-		printf("%d\n", h->n);
-		return (1);
-	}
 	/*CASE3: if prev of head is not NULL*/
 	if (h->prev != NULL)
 	{
