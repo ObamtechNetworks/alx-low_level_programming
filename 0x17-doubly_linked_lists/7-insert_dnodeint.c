@@ -31,12 +31,12 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 	if (temp == NULL && idx > 1)/*check for invalid index*/
 		return (NULL);/*index doesn't exist*/
 	/*other wise add node at possition of temp*/
-	if (temp != NULL && idx == 1)/*in between nodes*/
+	if (temp != NULL && temp->next != NULL && idx == 1)/*in between nodes*/
 	{
 		new_node->next = temp->next;
 		temp->next->prev = new_node;
 		temp->next = new_node;
-		new_node->prev = temp;
+		new_node->prev = temp; /*prev of temp*/
 	}
 	else if (temp == NULL && idx == 1)/*if it is the last node*/
 	{
@@ -45,5 +45,5 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 		new_node->next = NULL;
 		return (*h);
 	}
-	return (new_node); /*return the head of the node or new node*/
+	return (*h); /*return the head of the node or new node*/
 }
