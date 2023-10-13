@@ -8,37 +8,44 @@
  */
 dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 {
-	dlistint_t *temp = NULL, *new_node = NULL;/*create the new node*/
-	unsigned int i = 0;
+	dlistint_t *temp = *h, *new_node = NULL;/*create the new node*/
 
-	if (idx == 0)
-		new_node = add_dnodeint(h, n);
 	new_node = malloc(sizeof(dlistint_t));/*alloc space for new node*/
-	if (new_node == NULL || h == NULL) /*handle malloc return*/
+	if (new_node == NULL) /*handle malloc return*/
 		return (NULL);
 	new_node->n = n; /*set the data part of new node*/
-	if (*h == NULL && idx == 0) /*empty list*/
+	new_node->prev = NULL;/*set prev node of new node*/
+	if (*h == NULL && idx == 0)/*check if head is NULL to set as new node*/
+	{
 		*h = new_node;
-
-	temp = *h; /*traverse the list*/
-	while (i < idx - 1 && temp != NULL)
+		return (new_node);/*return the head*/
+	} /* traverse the list, based on head and index*/
+	if (idx == 0)
+	{
+		new_node->next = *h;
+		(*h)->prev = new_node;
+		*h = new_node;
+		return (new_node);
+	}
+	while (temp && idx > 1)
 	{
 		temp = temp->next;
-		i++;
+		idx--;
 	}
-	if (temp == NULL) /*index out of bound*/
+	if (temp == NULL && idx > 1)/*check for invalid index*/
 	{
 		free(new_node);
-		return (NULL);
+		return (NULL);/*index doesn't exist*/
 	}
-	/* insert at specified position*/
+	if (temp->next == NULL)
+	{
+		temp->next = new_node;
+		new_node->prev = temp;
+		return (new_node);
+	}
 	new_node->next = temp->next;
 	new_node->prev = temp;
-	if (temp->next != NULL) /*if it's not last node*/
-		temp->next->prev = new_node;
+	temp->next->prev = new_node;
 	temp->next = new_node;
-	if (new_node->next == NULL)
-		return (new_node);/*insertion at end of list*/
-	new_node->next->prev = new_node;
-	return (new_node); /*return the head of the node or new node*/
+	return (new_node);
 }
