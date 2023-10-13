@@ -36,11 +36,6 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 			}
 			temp = temp->next;
 		}
-		if (temp == NULL)/*check for invalid index*/
-		{
-			free(new_node);/*free allocated node*/
-			return (NULL);/*index doesn't exist*/
-		}
 		new_node->next = temp->next;
 		new_node->prev = temp; /*prev of temp*/
 		if (temp->next != NULL)
