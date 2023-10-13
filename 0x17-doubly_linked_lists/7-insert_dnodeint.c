@@ -8,8 +8,7 @@
  */
 dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 {
-	dlistint_t *temp = NULL;/* create a pointer to the head pointer*/
-	dlistint_t *new_node = NULL;/*create the new node*/
+	dlistint_t *temp = *h, *new_node = NULL;/*create the new node*/
 
 	new_node = malloc(sizeof(dlistint_t));/*alloc space for new node*/
 	if (new_node == NULL) /*handle malloc return*/
@@ -20,8 +19,7 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 	{
 		*h = new_node;
 		return (*h);/*return the head*/
-	}
-	temp = *h; /* traverse the list, based on head and index*/
+	} /* traverse the list, based on head and index*/
 	while (temp && idx > 1)
 	{
 		temp = temp->next;
@@ -34,7 +32,6 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 		new_node->prev = temp;
 		temp->next = new_node;
 		new_node->next = NULL;
-		return (*h);
 	}
 	/*other wise add node at possition of temp*/
 	if (temp != NULL && temp->next != NULL && idx == 1)/*in between nodes*/
@@ -44,12 +41,11 @@ dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 		temp->next = new_node;
 		new_node->prev = temp; /*prev of temp*/
 	}
-	else if (temp == NULL && idx == 1)/*if it's last node/jst two nodes*/
+	if (temp == NULL && idx == 1)/*if it's last node/jst two nodes*/
 	{
 		new_node->prev = temp;
 		temp->next = new_node;
 		new_node->next = NULL;
-		return (*h);
 	}
 	return (*h); /*return the head of the node or new node*/
 }
