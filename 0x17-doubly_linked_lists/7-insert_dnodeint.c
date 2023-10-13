@@ -8,43 +8,44 @@
  */
 dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 {
-	dlistint_t *temp = *h, *new_node = NULL;/*create the new node*/
+	dlistint_t *temp = NULL, *new_node = NULL;/*create the new node*/
+	unsigned int i = 0;
 
 	new_node = malloc(sizeof(dlistint_t));/*alloc space for new node*/
-	if (new_node == NULL) /*handle malloc return*/
+	if (new_node == NULL || h == NULL) /*handle malloc return*/
 		return (NULL);
 	new_node->n = n; /*set the data part of new node*/
 	if (*h == NULL && idx == 0) /*empty list*/
 		*h = new_node;
-	if (idx == 0 && *h != NULL)
+	if (idx == 0)
 	{
 		new_node->next = *h;
-		(*h)->prev = new_node;
+		if (*h != NULL)
+			(*h)->prev = new_node;
 		*h = new_node;
-		return (*h);
 	}
-	while (temp && idx > 1)
+	else
 	{
-		temp = temp->next;
-		idx--;
-	}
-	if (temp == NULL && idx > 0)/*check for invalid index*/
-	{
-		free(new_node);/*free allocated node*/
-		return (NULL);/*index doesn't exist*/
-	}
-	if (temp && temp->next == NULL && idx == 1)/*jst two nodes*/
-	{
-		new_node->prev = temp;
-		temp->next = new_node;
-		new_node->next = NULL;
-	}
-	if (temp != NULL && temp->next != NULL && idx == 1)/*in between nodes*/
-	{
+		temp = *h;
+		for (i = 0; i < idx - 1; ++i)
+		{
+			if (temp == NULL)
+			{
+				free(new_node);
+				return (NULL);
+			}
+			temp = temp->next;
+		}
+		if (temp == NULL)/*check for invalid index*/
+		{
+			free(new_node);/*free allocated node*/
+			return (NULL);/*index doesn't exist*/
+		}
 		new_node->next = temp->next;
-		temp->next->prev = new_node;
-		temp->next = new_node;
 		new_node->prev = temp; /*prev of temp*/
+		if (temp->next != NULL)
+			temp->next->prev = new_node;
+		temp->next = new_node;
 	}
-	return (*h); /*return the head of the node or new node*/
+	return (new_node); /*return the head of the node or new node*/
 }
