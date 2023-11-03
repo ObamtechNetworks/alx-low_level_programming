@@ -51,6 +51,12 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 	/*check if key is valid*/
 	if (!key || !value)
 	{
+		if (new_pair != NULL)
+		{
+			free(new_pair->key);
+			free(new_pair->value);
+			free(new_pair);
+		}
 		return (0);
 	}
 	/* create key value pair*/
