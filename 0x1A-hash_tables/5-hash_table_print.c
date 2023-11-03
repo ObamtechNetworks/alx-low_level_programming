@@ -18,7 +18,7 @@ void hash_table_print(const hash_table_t *ht)
 	}
 	printf("{");/*prints the open brace*/
 	/*itreate through the buckets based on size of the table*/
-	for (i = 0; i < ht->size; ++i)
+	for (i = 0; i < ht->size; i++)
 	{
 		/*get first node (first bucket)*/
 		node = ht->array[i];
