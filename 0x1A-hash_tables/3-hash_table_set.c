@@ -47,7 +47,6 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 	unsigned long int index = -1;
 	/*create ptr for node with key_value pair, also current to ptr to loop*/
 	hash_node_t *new_pair = NULL, *current = NULL;
-
 	/*check if key is valid*/
 	if (!key || !value)
 	{
@@ -65,19 +64,15 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 	{
 		return (0);
 	}
-
 	/*get key index */
 	index = key_index((const unsigned char *)key, ht->size);
-
 	/*set value into table if the position is NULL*/
 	if (ht->array[index] == NULL)
-	{
-		/*there's no collision, sets value easily*/
+	{ /*there's no collision, sets value easily*/
 		ht->array[index] = new_pair;
 	}
 	else
-	{
-		/*there's a collision, enter thru table and set at next*/
+	{ /*there's a collision, enter thru table and set at next*/
 		current = ht->array[index];
 		while (current->next != NULL)
 		{
