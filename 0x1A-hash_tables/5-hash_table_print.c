@@ -30,8 +30,11 @@ void hash_table_print(const hash_table_t *ht)
 			{
 				printf(",");/*separates pairs*/
 			}
-			/*else print the pair at that bucket/node*/
-			printf("'%s': '%s'", node->key, node->value);
+			/*print the pair at that bucket/node*/
+			if (node->key != NULL)
+				printf("'%s': '%s'", node->key, node->value);
+			else
+				printf("(null) : (null)");
 			/*set flag that it is printed*/
 			is_printed = 1;
 			node = node->next; /*check for chaining*/
