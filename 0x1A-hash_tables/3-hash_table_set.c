@@ -9,7 +9,7 @@ hash_node_t *create_pair(const char *key, const char *value)
 {
 	hash_node_t *new_pair = NULL;
 
-	if (!key || !value)
+	if (!key || !value || strlen(key) == 0)
 	{
 		return (NULL);
 	}
@@ -48,7 +48,7 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 	/*create ptr for node with key_value pair, also current to ptr to loop*/
 	hash_node_t *new_pair = NULL, *current = NULL;
 	/*check if key is valid*/
-	if (!key || !value)
+	if (!key || !value || strlen(key) == 0)
 	{
 		if (new_pair != NULL)
 		{
