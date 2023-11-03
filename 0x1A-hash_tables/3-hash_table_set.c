@@ -1,7 +1,7 @@
 #include "hash_tables.h"
 /**
  * create_pair - creates a new key value pair node
- * @key: the key to store in node
+ * @key: the key to store in node, cannot be an empty str
  * @value: the value of the key
  * Return: new pair, else NULL for failure
  */
@@ -44,42 +44,43 @@ hash_node_t *create_pair(const char *key, const char *value)
 int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 {
 	/* variable to hold index of table*/
-	unsigned long int index = -1;
-	/*create ptr for node with key_value pair, also current to ptr to loop*/
-	hash_node_t *new_pair = NULL, *current = NULL;
-	/*check if key is valid*/
-	if (!key || !value || strlen(key) == 0)
-	{
-		if (new_pair != NULL)
-		{
-			free(new_pair->key);
-			free(new_pair->value);
-			free(new_pair);
-		}
+	unsigned long int index = 0;
+	/*create ptr for node with key_value pair, also curr to ptr to loop*/
+	hash_node_t *new_pair = NULL, *curr = NULL;
+	/*check if arguments are valid*/
+	if (!ht || !key || !value || strlen(key) == 0)
 		return (0);
-	}
 	/* create key value pair*/
 	new_pair = create_pair(key, value);
 	if (new_pair == NULL)
-	{
 		return (0);
-	}
-	/*get key index */
-	index = key_index((const unsigned char *)key, ht->size);
+	index = key_index((const unsigned char *)key, ht->size); /*get index*/
 	/*set value into table if the position is NULL*/
 	if (ht->array[index] == NULL)
-	{ /*there's no collision, sets value easily*/
-		ht->array[index] = new_pair;
-	}
+		ht->array[index] = new_pair; /*NO COLLISION*/
 	else
-	{ /*there's a collision, enter thru table and set at next*/
-		current = ht->array[index];
-		while (current->next != NULL)
+	{ /*there's a collision, search thru and check if key exists*/
+		for (curr = ht->array[index]; curr != NULL; curr = curr->next)
 		{
-			current = current->next;
-		}
-		current->next = new_pair;
-
+			if (strcmp(curr->key, key) == 0)
+			{
+				free(curr->value);
+				curr->value = strdup(value);
+				if (curr->value == NULL)
+				{
+					free(new_pair->key);
+					free(new_pair->value);
+					free(new_pair);
+					return (0);/*mem alloc error*/
+				}
+				free(new_pair->key);
+				free(new_pair->value);
+				free(new_pair); /*free as its no more needed*/
+				return (1);
+			}
+		} /*if its a complet. new key, add at beg of list*/
+		new_pair->next = ht->array[index];
+		ht->array[index] = new_pair;
 	}
 	return (1); /*for success */
 }
