@@ -34,7 +34,7 @@ void hash_table_print(const hash_table_t *ht)
 			if (node->key != NULL && node->value != NULL)
 				printf("'%s': '%s'", node->key, node->value);
 			else
-				printf("(null) : (null)");
+				continue;
 			/*set flag that it is printed*/
 			is_printed = 1;
 			node = node->next; /*check for chaining*/
