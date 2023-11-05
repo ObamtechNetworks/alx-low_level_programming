@@ -22,7 +22,7 @@ void hash_table_print(const hash_table_t *ht)
 	{
 		/*get first node (first bucket)*/
 		node = ht->array[i];
-		/*check if first pair has been printed*/	
+		/*check if first pair has been printed*/
 		while (node)
 		{
 			if (is_printed)
