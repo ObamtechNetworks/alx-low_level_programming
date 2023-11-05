@@ -23,18 +23,18 @@ void hash_table_print(const hash_table_t *ht)
 		/*get first node (first bucket)*/
 		if (ht->array[i] != NULL)
 		{
+			node = ht->array[i];
 			/*check if first pair has been printed*/
 			if (is_printed)
 			{
 				printf(",");/*separates pairs*/
 			}
-			node = ht->array[i];
-			while (node != NULL)
+			while (node)
 			{
 				printf("'%s': '%s'", node->key, node->value);
+				node = node->next; /*check for chaining*/
 				/*set flag that it is printed*/
 				is_printed = 1;
-				node = node->next; /*check for chaining*/
 			}
 		}
 	}
