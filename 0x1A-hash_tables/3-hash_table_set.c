@@ -60,7 +60,8 @@ int hash_table_set(hash_table_t *ht, const char *key, const char *value)
 		ht->array[index] = new_pair; /*NO COLLISION*/
 	else
 	{ /*there's a collision, search thru and check if key exists*/
-		for (curr = ht->array[index]; curr != NULL; curr = curr->next)
+		curr = ht->array[index];
+		for (; curr != NULL; curr = curr->next)
 		{
 			if (strcmp(curr->key, key) == 0)
 			{

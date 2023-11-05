@@ -18,7 +18,7 @@ unsigned long int key_index(const unsigned char *key, unsigned long int size)
 	}
 
 	/*calculate the index, call the hash fxn to calculate hash*/
-	hash = hash_djb2(key);
+	hash = hash_djb2((const unsigned char *)key);
 
 	/*compute index by doing modulo of the table size*/
 	index = hash % size;
