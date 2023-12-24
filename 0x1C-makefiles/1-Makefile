@@ -1,0 +1,9 @@
+# creating variables in Makefiles
+# CC -> the compiler to use
+# SRC -> the source files to reference
+
+CC := gcc
+SRC != find . -name '*.c'
+all : school
+school : main.c school.c m.h
+	$(CC) -o school $(SRC)
