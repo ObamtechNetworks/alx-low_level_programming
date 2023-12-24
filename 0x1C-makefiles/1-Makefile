@@ -2,17 +2,8 @@
 # CC -> the compiler to use
 # SRC -> the source files to reference
 
-ifndef CC
-CC := gcc
-endif
+CC = gcc
+SRC = main.c school.c
 
-ifndef SRC
-SRC := main.c school.c
-endif
-
-.PHONY : all school
-
-all : school
-
-school : $(SRC)
+all : $(SRC)
 	$(CC) $(SRC) -o school
