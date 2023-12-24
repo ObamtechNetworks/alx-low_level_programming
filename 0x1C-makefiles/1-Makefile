@@ -2,8 +2,13 @@
 # CC -> the compiler to use
 # SRC -> the source files to reference
 
+ifndef CC
 CC := gcc
+endif
+
+ifndef SRC
 SRC := main.c school.c
+endif
 
 .PHONY : all school
 
