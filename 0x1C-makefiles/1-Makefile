@@ -1,7 +1,7 @@
 # creating variables in Makefiles
 # CC -> the compiler to use
 # SRC -> the source files to reference
-# ALX's way they want it, i have previous implement from commit history
+# ALX's way they want it, i have previous implement from commit history!
 
 CC = gcc
 SRC = main.c school.c
