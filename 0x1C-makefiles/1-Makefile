@@ -2,11 +2,6 @@
 # CC -> the compiler to use
 # SRC -> the source files to reference
 
-# SRC != find . -name '*.c' --> this seems not to be working > my first implementation
-# the | -> means Order-Only Prerequisites
-# SRC = $(wildcard *.c) =-> alternative
-# Also: SRC = $(shell find . -name '*.c')
-
 CC := gcc
 SRC := $(wildcard *.c)
 
@@ -15,4 +10,4 @@ SRC := $(wildcard *.c)
 all : school
 
 school : $(SRC)
-	$(CC) -o school $(SRC)
+	$(CC) $(SRC) -o school
