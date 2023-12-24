@@ -1,0 +1,6 @@
+# the 'all' rule is a phony target in make used
+# to build default set of targets when you run make
+
+all : school
+school : main.c school.c m.h
+	gcc -o school main.c school.c
