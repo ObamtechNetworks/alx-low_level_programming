@@ -1,9 +1,13 @@
 # creating variables in Makefiles
 # CC -> the compiler to use
 # SRC -> the source files to reference
+# SRC != find . -name '*.c' --> this seems not to be working > my f    irst implementation
+# the | -> means Order-Only Prerequisites
+# SRC = $(wildcard *.c) =-> alternative --BUT IT IS FORBIDDEN
+# Also: SRC = $(shell find . -name '*.c') - THIS NOT FOLLOWING OUTPUT
 
 CC := gcc
-SRC := $(wildcard *.c)
+SRC := main.c school.c
 
 .PHONY : all school
 
