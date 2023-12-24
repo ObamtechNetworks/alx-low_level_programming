@@ -4,15 +4,16 @@
 
 # SRC != find . -name '*.c' --> this seems not to be working > my first implementation
 # the | -> means Order-Only Prerequisites
+# SRC = $(wildcard *.c) =-> alternative
 
 CC := gcc
-SRC = $(wildcard *.c)
+SRC := $(shell find . -name '*.c')
 
-.PHONY : all
+.PHONY : all school
 
 all : school
 
-school : | $(SRC)
+school : $(SRC)
 	$(CC) -o school $(SRC)
 
 $(SRC) : m.h
