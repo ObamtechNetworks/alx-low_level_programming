@@ -1,0 +1,41 @@
+# CC -> compiler
+# SRC -> source files
+# OBJ -> object files
+# NAME -> name of the executable
+# RM: the program to delete files
+# You are not allowed to have a list of all the .o fileS
+# RULES:
+# all -> builds your executable
+# clean -> deletes all Emacs and Vim temporary files along with the executable
+# oclean -> delete the object files
+# fclean -> delete the Emacs and Vim temporary files, exe and obj files
+# re -> force recompilation of all source files
+
+
+CC = gcc
+SRC = main.c school.c
+OBJ = $(SRC:.c=.o)
+NAME = school
+RM = rm -f  # to be used in the clean rules
+
+all : $(OBJ)
+	$(CC) $(OBJ) -o $(NAME)
+
+$(NAME) : $(OBJ)
+	$(CC) $(OBJ) -o $(NAME)
+
+%.o : %.c
+	$(CC) -c -o $@ $<
+
+# del all emacs and vim temp files along with the executable
+clean : 
+	@$(RM) *~ \#* $(NAME)
+
+oclean :
+	@$(RM) $(OBJ)
+
+# clean rule to del all temp files, exe and obj files
+fclean : clean oclean
+
+# forces recompilation of all source files
+re : fclean all
