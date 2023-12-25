@@ -1,0 +1,18 @@
+# CC -> compiler
+# SRC -> source files
+# OBJ -> object files
+# NAME -> name of the executable
+# You are not allowed to have a list of all the .o fileS
+# 
+CC = gcc
+SRC = main.c school.c
+OBJ = $(SRC:.c=.o)
+NAME = school
+
+all : $(OBJ)
+	$(CC) $(OBJ) -o $(NAME)
+$(NAME) : $(OBJ)
+	$(CC) $(OBJ) -o $(NAME)
+
+%.o : %.c
+	$(CC) -c -o $@ $<
