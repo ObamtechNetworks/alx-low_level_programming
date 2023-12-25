@@ -59,7 +59,4 @@ def island_perimeter(grid):
                 if j < cols - 1 and grid[i][j + 1] == 1:
                     perimeter -= 1
 
-                # Check if the cell is on the edge
-                if i == 0 or i == rows - 1 or j == 0 or j == cols - 1:
-                    perimeter += 1
     return perimeter
