@@ -99,10 +99,9 @@ int exponential_search(int *array, size_t size, int value)
 		printf("Value checked array[%d] = [%d]\n", i, array[i]);
 		i *= 2;
 	}
-	
 	if (i / 2 != 2)
 	{
-		lower_bound = (i / 2);
+		lower_bound = i / 2;
 		upper_bound = i - 1;
 	}
 	else
@@ -112,8 +111,8 @@ int exponential_search(int *array, size_t size, int value)
 	}
 	printf("Value found between indexes [%d] and [%d]\n",
 			lower_bound, upper_bound);
-
-	result = binary_search(&array[lower_bound], upper_bound - lower_bound + 1, value);
+	result = binary_search(&array[lower_bound],
+			upper_bound - lower_bound + 1, value);
 	if (result != -1)
 	{
 		result += lower_bound;
