@@ -34,8 +34,6 @@ int advanced_binary(int *array, size_t size, int value)
 			return (0);
 		if (array[1] == value)
 			return (1);
-		else
-			index = size / 2;
 	}
 	index = size / 2;
 	if (array[index] == value)
